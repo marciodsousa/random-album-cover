@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "pooch",
+    "password": "pooch",
+    "database": "free-pooch",
+    "host": "db",
+    "port": 27017,
+    "dialect": "mongo"
+  }
+}
