@@ -1,0 +1,20 @@
+version: '3'
+services:
+  server:
+    image: nginx:1.17-alpine
+    ports:
+      - '80:80' # Connect localhost 80 port to container 80 port
+    links: # Link services to access http://app and  http://api inside the container
+      - api
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+  api:
+    image: node:13-alpine
+    working_dir: /home/node/app
+    volumes:
+      - ./src:/home/node/app
+    environment:
+      - NODE_ENV=development
+    command: "npm start"
+    ports:
+      - '8080'

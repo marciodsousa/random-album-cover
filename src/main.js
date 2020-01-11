@@ -14,18 +14,31 @@ $(document).ready(() => {
     const promiseWikiquote = $.get("https://en.wikiquote.org/wiki/Special:Random")
         .done(function (payload) {
             const $parsedPayloadDom = $(payload);
-            const $quotesDom = $parsedPayloadDom.find("#Quotes");
-            const domElementIndexStart = $quotesDom.parent().index();
-            const domElementIndexEnd = $quotesDom.parent().nextAll("h1,h2,h3,h4,h5,div").first().index();
+
             const eligibleQuotes = [];
+            $parsedPayloadDom.find('#bodyContent li:not([class]):not(li li), #bodyContent dd:not([class])').each((index, element) => {
+                const $element = $(element);
+                if (!$(element).closest(".mw-parser-output").length) return true;
+                $element.find("li,dd").remove();
+
+                eligibleQuotes.push($element.text());
+           });
+    
+
+
+
+            // const $quotesDom = $parsedPayloadDom.find("#Quotes");
+            // const domElementIndexStart = $quotesDom.parent().index();
+            // const domElementIndexEnd = $quotesDom.parent().nextAll("h1,h2,h3,h4,h5,div").first().index();
+            // const eligibleQuotes = [];
             const numberWordsToKeep = getRandomInt(3, 5);
 
-            $quotesDom.closest("div").children().each((index, element) => {
-                if (index <= domElementIndexStart) return true;
-                if (index >= domElementIndexEnd) return false;
+            // $quotesDom.closest("div").children().each((index, element) => {
+            //     if (index <= domElementIndexStart) return true;
+            //     if (index >= domElementIndexEnd) return false;
 
-                eligibleQuotes.push($(element).children()[0].childNodes[0].nodeValue);
-            });
+            //     eligibleQuotes.push($(element).children()[0].childNodes[0].nodeValue);
+            // });
 
             let selectedQuote = eligibleQuotes[getRandomInt(0, eligibleQuotes.length)];
             selectedQuote = selectedQuote.slice(0, selectedQuote.length).split(" ").slice(-1 * numberWordsToKeep).join(" ");

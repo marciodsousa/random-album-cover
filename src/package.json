@@ -1,0 +1,22 @@
+{
+  "name": "random-album-cover",
+  "version": "1.0.0",
+  "description": "Node app to generate random album cover",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marciodsousa/random-album-cover.git"
+  },
+  "author": "Marcio de Sousa <marciodesousa16@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marciodsousa/random-album-cover/issues"
+  },
+  "homepage": "https://github.com/marciodsousa/random-album-cover#readme",
+  "dependencies": {
+    "jsdom": "^15.2.1"
+  }
+}
