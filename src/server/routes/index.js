@@ -5,7 +5,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 
 // Do work here
 
-router.get('/test', catchErrors(baseController.getWikipediaName));
+router.get('/test', catchErrors(baseController.getAllInfo));
 router.get('/parks',(req,res) => {
     res.render('index');
     // res.send('Hey! It works!');
