@@ -13,12 +13,14 @@ const routes = require('./server/routes/index');
 // const helpers = require('./server/helpers');
 const errorHandlers = require('./server/handlers/errorHandlers');
 
+const cons = require('consolidate');
 // create our Express app
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views')); // this is the folder where we keep our pug files
-app.set('view engine', 'pug'); // we use the engine pug, mustache or EJS work great too
+app.set('views', __dirname + '/views');
+app.engine('html', cons.mustache);
+app.set('view engine', 'html');
 
 // serves up static files from the public folder. Anything in public/ will just be served up as the file it is
 app.use(express.static(path.join(__dirname, 'public')));
