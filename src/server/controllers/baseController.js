@@ -12,18 +12,18 @@ const textMutations = {
 
 const albumStyles = [{
     title: { font: "edgy", style: "normal", ending: "question", case: "lower" },
-    artist: { font: "cursive", style: "normal", ending: "question", case: "lower" },
+    artist: { font: "lucky", style: "strikethrough", ending: "question", case: "lower" },
 }, {
     title: { font: "edgy", style: "normal", ending: "question", case: "lower" },
-    artist: { font: "cursive", style: "normal", ending: "question", case: "lower" },
+    artist: { font: "classic", style: "overline", ending: "question", case: "lower" },
 }, {
     title: { font: "lucky", style: "normal", ending: "question", case: "lower" },
     artist: { font: "cursive", style: "normal", ending: "question", case: "lower" },
 }, {
-    title: { font: "classic", style: "normal", ending: "question", case: "lower" },
-    artist: { font: "lucky", style: "normal", ending: "question", case: "lower" },
+    title: { font: "classic", style: "normal", ending: "question", case: "capitalize" },
+    artist: { font: "lucky", style: "normal", ending: "question", case: "upper" },
 }, {
-    title: { font: "edgy", style: "normal", ending: "question", case: "lower" },
+    title: { font: "edgy", style: "italic", ending: "question", case: "camel" },
     artist: { font: "cursive", style: "normal", ending: "question", case: "lower" },
 }];
 
@@ -161,7 +161,7 @@ const parsers = {
 }
 
 function applyAlbumStyle(albumData) {
-    const albumStyleToApply = albumStyles[getRandomInt(0, albumStyles.length)];
+    const albumStyleToApply = albumStyles[getRandomInt(0, albumStyles.length - 1)];
     Object.keys(albumData).forEach(albumDataElement => {
         const elementData = albumData[albumDataElement];
         const styleData = albumStyleToApply[albumDataElement];
