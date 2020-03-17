@@ -7,11 +7,23 @@ body {
     grid-template-rows: 30px auto 30px;
 }
 
+.header {
+    grid-column: 1/ span 3;
+    grid-row: 1;
+    margin: auto;
+}
+
+.footer {
+    grid-column: 1/ span 3;
+    grid-row: 3;
+    margin: auto;
+}
+
 .wrapper {
     grid-column: 2;
     grid-row: 2;
     margin: auto;
-    width: 750px;
+    width: 975px;
     height: 750px;
     display: flex;
 }
@@ -27,15 +39,15 @@ main {
 }
 
 .background {
-    width: 100%;
-    height: 100%;
+    width: 750px;
+    height: 750px;
     position: relative;
     box-shadow: 16px 1px 26px -9px #000000;
 }
 
 .record-container {
     z-index: -1;
-    left: 50%;
+    left: 44%;
     display: inline-block;
     overflow: hidden;
     width: 750px;
@@ -123,6 +135,40 @@ main {
     text-decoration: line-through;
 }
 
+.background--bnw {
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+}
+
+.background--high-contrast {
+    -webkit-filter: contrast(4);
+    filter: contrast(4);
+}
+
+.background--low-contrast {
+    -webkit-filter: contrast(20%);
+    filter: contrast(20%);
+}
+
+.background--sepia {
+    -webkit-filter: sepia(1);
+    filter: sepia(1);
+}
+
+.background--low-brightness {
+    -webkit-filter: brightness(20%);
+    filter: brightness(20%);
+}
+
+.background--high-brightness {
+    -webkit-filter: brightness(3);
+    filter: brightness(3);
+}
+
+.background--hue-variation {
+    filter: hue-rotate(30deg);
+}
+
 .artist {
     grid-column: 1 / span 4;
     grid-row: 1;
@@ -139,8 +185,13 @@ main {
     font-size: 20px;
 }
 
-img {
+.parental-adv {
     padding: 10px;
+    display: none;
     grid-column: 5;
     grid-row: 5;
+}
+
+.needs-parental .parental-adv {
+    display: initial;
 }

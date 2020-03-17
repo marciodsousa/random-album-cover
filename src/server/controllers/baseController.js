@@ -4,10 +4,11 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
 const textMutations = {
-    case: ["upper", "lower", "camel"],
-    font: ["edgy", "edgy", "edgy", "edgy", "edgy"],
+    case: ["upper", "lower", "capitalize", "camel"],
+    font: ["edgy", "classic", "cursive", "lucky"],
     style: ["bold", "underline", "normal", "strikethrough"],
-    ending: ["none", "fullstop", "exclamation", "question", "ellipsis"]
+    ending: ["none", "fullstop", "exclamation", "question", "ellipsis"],
+    background: ["bnw", "high-contrast", "low-contrast", "sepia", "low-brightness", "high-brightness", "hue-variation"]
 }
 
 const albumStyles = [{
@@ -45,7 +46,7 @@ exports.getWikiquoteTitle = async(req, res) => {
     const response = await axios.get('https://en.wikiquote.org/wiki/Special:Random')
 
     const dom = new JSDOM(response.data);
-    const eligibleQuotes = [];
+    const eligibleQuotes = ["untitled"];
 
     dom.window.document.querySelectorAll('#bodyContent li:not([class]), #bodyContent dd:not([class])').forEach(element => {
         if (!element.closest(".mw-parser-output") || element.closest("li")) return true;
@@ -88,7 +89,7 @@ exports.getAllInfo = async(req, res) => {
             throw error;
         });
 
-    const albumData = applyAlbumStyle({ artist: { text: bandName }, title: { text: albumTitle }, coverImage: { url: albumCoVer } });
+    const albumData = applyAlbumStyle({ artist: { text: bandName }, title: { text: albumTitle }, background: { url: albumCoVer } });
     res.render('index', albumData);
 }
 
@@ -157,7 +158,7 @@ function coverTransformer(coverData, coverStyle) {
 const parsers = {
     title: titleTransformer,
     artist: artistTransformer,
-    coverImage: coverTransformer
+    background: coverTransformer
 }
 
 function applyAlbumStyle(albumData) {
@@ -168,5 +169,6 @@ function applyAlbumStyle(albumData) {
         if (styleData)
             albumData[albumDataElement] = parsers[albumDataElement](elementData, styleData);
     });
+    albumData.parentSupervision = getRandomInt(0, 1) ? true : false;
     return albumData;
 }
