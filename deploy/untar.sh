@@ -1,9 +1,8 @@
 # export NODE_ENV=production
 # export NVM_BIN=$HOME/.nvm/versions/node/v6.9.0/bin
 
-cd /usr/share/nginx/html/album-cover && \
-rm -r album-cover
+cd ~/temp_ci && \
 tar zxf album-cover.tgz -C . && \
 rm album-cover.tgz
-cd album-cover
-yarn prod:reload
+mv -r album-cover /usr/share/nginx/html/album-cover/versions/
+cd /usr/share/nginx/html/album-cover/versions/album-cover
