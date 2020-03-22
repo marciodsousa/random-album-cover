@@ -11,8 +11,7 @@ env:
   - REMOTE_HOST=146.185.133.5 # your droplet IP goes here
   - PORT=8080
 before_install:
-- openssl aes-256-cbc -K $encrypted_afbd8d8994e1_key -iv $encrypted_afbd8d8994e1_iv
-  -in do_deploy_key.enc -out do_deploy_key -d
+- openssl aes-256-cbc -K $encrypted_ad9b0644fe61_key -iv $encrypted_ad9b0644fe61_iv -in travis_ssh_key.enc -out travis_ssh_key -d
 - bash deploy/install.sh
 script:
 - bash deploy/build.sh
