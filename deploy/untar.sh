@@ -4,5 +4,5 @@
 cd ~/temp_ci && \
 tar zxf album-cover.tgz -C . && \
 rm album-cover.tgz
-mv -r album-cover /usr/share/nginx/html/album-cover/versions/
-cd /usr/share/nginx/html/album-cover/versions/album-cover
+mv random-album-cover /usr/share/nginx/html/album-cover/versions/
+cd /usr/share/nginx/html/album-cover/versions/random-album-cover
