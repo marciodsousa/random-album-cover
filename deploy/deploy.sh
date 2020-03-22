@@ -15,6 +15,6 @@ set -x
 #     echo "Not deploying, since this branch isn't master."
 # fi
 cd ..
-tar -czf album-cover.tgz ./album-cover && \
+tar -czf album-cover.tgz ./random-album-cover && \
 scp album-cover.tgz $REMOTE_USER@$REMOTE_HOST:$REMOTE_APP_DIR && \
 ssh $REMOTE_USER@$REMOTE_HOST 'bash -s' < ./album-cover/deploy/untar.sh
