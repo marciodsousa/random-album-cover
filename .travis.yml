@@ -6,7 +6,7 @@ addons:
   ssh_known_hosts: 146.185.133.5
 env:
   global:
-  - REMOTE_APP_DIR=/usr/share/html/free-pooch/
+  - REMOTE_APP_DIR=/usr/share/nginx/html/album-cover
   - REMOTE_USER=centos
   - REMOTE_HOST=146.185.133.5 # your droplet IP goes here
   - PORT=8080
