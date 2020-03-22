@@ -17,4 +17,4 @@ set -x
 cd ..
 tar -czf album-cover.tgz ./random-album-cover && \
 scp album-cover.tgz $REMOTE_USER@$REMOTE_HOST:$REMOTE_APP_DIR && \
-ssh $REMOTE_USER@$REMOTE_HOST 'bash -s' < ./album-cover/deploy/untar.sh
+ssh $REMOTE_USER@$REMOTE_HOST 'bash -s' < ./temp_ci/album-cover/deploy/untar.sh
