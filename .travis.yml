@@ -20,6 +20,5 @@ after_success:
 - bash deploy/deploy.sh
 cache:
   directories:
-  - client/node_modules
-  - server/node_modules
+  - src/node_modules
   yarn: true
