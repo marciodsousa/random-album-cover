@@ -5,4 +5,5 @@ cd ~/temp_ci && \
 tar zxf album-cover.tgz -C . && \
 rm album-cover.tgz
 mv random-album-cover /usr/share/nginx/html/album-cover/versions/$1
-ln -sfn /usr/share/nginx/html/album-cover/versions/$1/src /usr/share/nginx/html/album-cover/current/
+ln -sfn /usr/share/nginx/html/album-cover/versions/$1/src /usr/share/nginx/html/album-cover/current
+cd /usr/share/nginx/html/album-cover/current && yarn prod-reload
