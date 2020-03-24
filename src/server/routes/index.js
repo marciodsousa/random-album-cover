@@ -5,12 +5,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 
 // Do work here
 
-router.get('/test', catchErrors(baseController.getAllInfo));
-router.get('/parks',(req,res) => {
-    res.render('index');
-    // res.send('Hey! It works!');
-});
-
+router.get('/', catchErrors(baseController.getAllInfo));
 
 // router.get('/reverse/:name', (req,res) => {
 //   const reverse = [...req.params.name].reverse().join('');
