@@ -2,6 +2,7 @@ const uuid = require('uuid');
 const axios = require('axios');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const ColorThief = require('colorthief');
 
 const textMutations = {
     case: ["upper", "lower", "capitalize", "camel"],
@@ -89,7 +90,20 @@ exports.getAllInfo = async(req, res) => {
             throw error;
         });
 
-    const albumData = applyAlbumStyle({ artist: { text: bandName }, title: { text: albumTitle }, background: { url: albumCoVer } });
+    const palette = await getPalette(albumCoVer);
+
+    const paletteObj = {
+        color1: palette[0].join(","),
+        color2: palette[1].join(","),
+        color3: palette[2].join(","),
+        color4: palette[3].join(","),
+        color5: palette[4].join(",")
+    }
+    const albumData = applyAlbumStyle({
+        artist: { text: bandName },
+        title: { text: albumTitle },
+        background: { url: albumCoVer, palette: paletteObj }
+    });
     res.render('index', albumData);
 }
 
@@ -106,6 +120,9 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+async function getPalette(url) {
+    return ColorThief.getPalette(url, 5)
+}
 
 function titleTransformer(titleData, titleStyle) {
     titleData.classes = [];
@@ -152,6 +169,7 @@ function coverTransformer(coverData, coverStyle) {
     })
 
     coverData.classes = coverData.classes.join(" ");
+
     return coverData;
 }
 
@@ -170,5 +188,6 @@ function applyAlbumStyle(albumData) {
             albumData[albumDataElement] = parsers[albumDataElement](elementData, styleData);
     });
     albumData.parentSupervision = getRandomInt(0, 1) ? true : false;
+
     return albumData;
 }

@@ -18,3 +18,4 @@ services:
     command: "npm start"
     ports:
       - '8080'
+      - '9229:9229'

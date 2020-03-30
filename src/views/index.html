@@ -5,10 +5,11 @@
     <link href="main.css" rel="stylesheet">
 </head>
 
-<body>
+<body style="background-image: linear-gradient(rgb({{background.palette.color1}}), rgb({{background.palette.color2}}));">
     <div class="header">
         <H1>Random Album Art Generator!</H1>
         <h3>{{title.text}} by {{artist.text}}</h3>
+        <div>palette: {{background.palette}}</div>
     </div>
     <div class="wrapper">
         <div class="background {{background.classes}}" style="background-image: url({{background.url}});"></div>
