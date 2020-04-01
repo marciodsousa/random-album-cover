@@ -6,6 +6,10 @@ body {
     height: 100%;
 }
 
+a {
+    color: var(--accent-color);
+}
+
 .page__background {
     position: relative;
     z-index: -1;
@@ -67,6 +71,7 @@ body.page--dark {
     position: absolute;
     width: 750px;
     height: 750px;
+    z-index: 2;
 }
 
 .cover__background {
@@ -74,6 +79,16 @@ body.page--dark {
     height: 750px;
     position: relative;
     box-shadow: 16px 1px 26px -9px #000000;
+}
+
+.cover__overlay {
+    position: absolute;
+    background-image: url(overlay.png);
+    width: 750px;
+    height: 750px;
+    z-index: 3;
+    mix-blend-mode: overlay;
+    filter: opacity(0.3);
 }
 
 .record-container {
@@ -105,7 +120,7 @@ body.page--dark {
     width: 175px;
     height: 175px;
     border-radius: 50%;
-    box-shadow: 0 0 0 4px #da5b33, inset 0 0 0 82px #da5b33;
+    box-shadow: 0 0 0 4px var(--accent-color), inset 0 0 0 82px var(--accent-color);
     background: #b5ac9a;
     content: '';
 }

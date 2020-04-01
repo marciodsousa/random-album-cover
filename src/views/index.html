@@ -7,6 +7,11 @@
         const palette = JSON.parse("{{background.paletteArray}}")
         const majorColor = "{{background.majorColor}}";
     </script>
+    <style>
+         :root {
+            --accent-color: rgb({{background.palette.color2}});
+        }
+    </style>
 </head>
 
 <body {{#isCoverImageDark}}class="page--dark" {{/isCoverImageDark}}>
@@ -29,12 +34,13 @@
                 <img class="cover__parental" src="Parental_Advisory_label.svg">
 
             </main>
+            <div class="cover__overlay"></div>
             <div class="record-container">
                 <div class="record"></div>
             </div>
         </div>
         <div class="page__footer">
-            made with ♥️ by <a href="http://marciodesousa.xyz">Márcio de Sousa</a>
+            made with ♥️ by <a href="http://marciodesousa.xyz" target="_blank">Márcio de Sousa</a>
         </div>
     </div>
 
