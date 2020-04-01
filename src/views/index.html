@@ -3,32 +3,41 @@
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Luckiest+Guy&family=Arima+Madurai:wght@300&family=Bangers&display=swap" rel="stylesheet">
     <link href="main.css" rel="stylesheet">
+    <script>
+        const palette = JSON.parse("{{background.paletteArray}}")
+        const majorColor = "{{background.majorColor}}";
+    </script>
 </head>
 
-<body style="background-image: linear-gradient(rgb({{background.palette.color1}}), rgb({{background.palette.color2}}));">
-    <div class="header">
-        <H1>Random Album Art Generator!</H1>
-        <h3>{{title.text}} by {{artist.text}}</h3>
-        <div>palette: {{background.palette}}</div>
-    </div>
-    <div class="wrapper">
-        <div class="background {{background.classes}}" style="background-image: url({{background.url}});"></div>
-        <main class="content {{#parentSupervision}}needs-parental{{/parentSupervision}}">
+<body {{#isCoverImageDark}}class="page--dark" {{/isCoverImageDark}}>
+    <div class="page__background" style="background-image: url({{background.url}});"></div>
 
-            <p class="artist {{artist.classes}}">{{artist.text}}</p>
+    <div class="page__wrapper">
+        <div class="page__header">
+            <H1>Random Album Art Generator!</H1>
+            <h3>{{title.text}} by {{artist.text}}</h3>
+            <div>palette: {{background.palette}}</div>
+        </div>
+        <div class="cover__wrapper">
+            <div class="cover__background {{background.classes}}" style="background-image: url({{background.url}});"></div>
+            <main class="cover__content {{#parentSupervision}}cover__content--parental{{/parentSupervision}}">
+                <p class="cover__artist {{artist.classes}}">{{artist.text}}</p>
 
-            <p class="title {{title.classes}}">{{title.text}}</p>
+                <p class="cover__title {{title.classes}}">{{title.text}}</p>
 
-            <img class="parental-adv" src="Parental_Advisory_label.svg" />
 
-        </main>
-        <div class='record-container'>
-            <div class='record'></div>
+                <img class="cover__parental" src="Parental_Advisory_label.svg">
+
+            </main>
+            <div class="record-container">
+                <div class="record"></div>
+            </div>
+        </div>
+        <div class="page__footer">
+            made with ♥️ by <a href="http://marciodesousa.xyz">Márcio de Sousa</a>
         </div>
     </div>
-    <div class="footer">
-        made with ♥️ by <a href="http://marciodesousa.xyz">Márcio de Sousa</a>
-    </div>
+
 </body>
 
 </html>

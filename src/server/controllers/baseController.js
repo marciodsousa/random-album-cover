@@ -91,19 +91,21 @@ exports.getAllInfo = async(req, res) => {
         });
 
     const palette = await getPalette(albumCoVer);
+    const majorColor = await getMajorColor(albumCoVer);
+    const averageBrightness = 0.299 * majorColor[0] + 0.587 * majorColor[1] + 0.114 * majorColor[2];
+    const isCoverImageDark = averageBrightness < 127;
 
     const paletteObj = {
         color1: palette[0].join(","),
         color2: palette[1].join(","),
-        color3: palette[2].join(","),
-        color4: palette[3].join(","),
-        color5: palette[4].join(",")
+        color3: palette[2].join(",")
     }
     const albumData = applyAlbumStyle({
         artist: { text: bandName },
         title: { text: albumTitle },
-        background: { url: albumCoVer, palette: paletteObj }
+        background: { url: albumCoVer, majorColor, palette: paletteObj, paletteArray: JSON.stringify(palette) }
     });
+    albumData.isCoverImageDark = isCoverImageDark;
     res.render('index', albumData);
 }
 
@@ -121,7 +123,10 @@ function getRandomInt(min, max) {
 }
 
 async function getPalette(url) {
-    return ColorThief.getPalette(url, 5)
+    return ColorThief.getPalette(url, 3)
+}
+async function getMajorColor(url) {
+    return ColorThief.getColor(url)
 }
 
 function titleTransformer(titleData, titleStyle) {
