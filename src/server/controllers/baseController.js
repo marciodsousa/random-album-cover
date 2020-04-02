@@ -1,4 +1,3 @@
-const uuid = require('uuid');
 const axios = require('axios');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -36,17 +35,17 @@ exports.getFullInfo = async(req, res) => {
 
 exports.getWikipediaName = async(req, res) => {
     const response = await axios.get('https://en.wikipedia.org/wiki/Special:Random');
-    // console.log(response.request.res.responseUrl);
+    console.log(response.request.res.responseUrl);
     const dom = new JSDOM(response.data);
     const chosenArtistName = dom.window.document.querySelector("#firstHeading").textContent
-    return chosenArtistName;
+    return { chosenArtistName, originUrl: response.request.res.responseUrl };
 }
 
 
 exports.getWikiquoteTitle = async(req, res) => {
     const response = await axios.get('https://en.wikiquote.org/wiki/Special:Random')
 
-    // console.log(response.request.res.responseUrl);
+    console.log(response.request.res.responseUrl);
     const dom = new JSDOM(response.data);
     const eligibleQuotes = ["untitled"];
 
@@ -59,41 +58,43 @@ exports.getWikiquoteTitle = async(req, res) => {
 
     const numberWordsToKeep = getRandomInt(3, 5);
     let selectedQuote = eligibleQuotes[getRandomInt(0, eligibleQuotes.length)];
-    if (!selectedQuote) return "";
+    const ret = { originUrl: response.request.res.responseUrl };
+    if (!selectedQuote) return ret;
     selectedQuote = selectedQuote.slice(0, selectedQuote.length).split(" ").slice(-1 * numberWordsToKeep).join(" ");
-    return selectedQuote;
+    ret.selectedQuote = selectedQuote;
+    return ret;
 
 }
 
 exports.getFlickrPhoto = async(req, res) => {
     const response = await axios.get('https://www.flickr.com/explore/interesting/7days/?')
 
-    // console.log(response.request.res.responseUrl);
+    console.log(response.request.res.responseUrl);
     const dom = new JSDOM(response.data);
     const photoDom = dom.window.document.querySelectorAll(".Photo")[5]; //get the 5th one
     const photoEndpoint = photoDom.querySelector("img").getAttribute("src").replace("_m.", "_b.")
 
 
-    return photoEndpoint;
+    return { photoEndpoint, originUrl: response.request.res.responseUrl };
 }
 
 exports.getAllInfo = async(req, res) => {
 
-    const bandName = await exports.getWikipediaName()
+    const bandInfo = await exports.getWikipediaName()
         .catch(error => {
             throw error;
         });
-    const albumTitle = await exports.getWikiquoteTitle()
+    const albumInfo = await exports.getWikiquoteTitle()
         .catch(error => {
             throw error;
         });
-    const albumCoVer = await exports.getFlickrPhoto()
+    const backgroundInfo = await exports.getFlickrPhoto()
         .catch(error => {
             throw error;
         });
 
-    const palette = await getPalette(albumCoVer);
-    const majorColor = await getMajorColor(albumCoVer);
+    const palette = await getPalette(backgroundInfo.photoEndpoint);
+    const majorColor = await getMajorColor(backgroundInfo.photoEndpoint);
     const averageBrightness = 0.299 * majorColor[0] + 0.587 * majorColor[1] + 0.114 * majorColor[2];
     const isCoverImageDark = averageBrightness < 127;
 
@@ -103,9 +104,9 @@ exports.getAllInfo = async(req, res) => {
         color3: palette[2].join(",")
     }
     const albumData = applyAlbumStyle({
-        artist: { text: bandName },
-        title: { text: albumTitle },
-        background: { url: albumCoVer, majorColor, palette: paletteObj, paletteArray: JSON.stringify(palette) }
+        artist: { text: bandInfo.chosenArtistName, originUrl: bandInfo.originUrl },
+        title: { text: albumInfo.selectedQuote, originUrl: albumInfo.originUrl },
+        background: { url: backgroundInfo.photoEndpoint, originUrl: backgroundInfo.originUrl, majorColor, palette: paletteObj, paletteArray: JSON.stringify(palette) }
     });
     albumData.isCoverImageDark = isCoverImageDark;
     res.render('index', albumData);

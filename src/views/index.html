@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<title>Random Album Art Generator | marciodesousa</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Luckiest+Guy&family=Arima+Madurai:wght@300&family=Bangers&display=swap" rel="stylesheet">
     <link href="main.css" rel="stylesheet">
     <script>
@@ -19,20 +20,15 @@
 
     <div class="page__wrapper">
         <div class="page__header">
-            <H1>Random Album Art Generator!</H1>
-            <h3>{{title.text}} by {{artist.text}}</h3>
-            <div>palette: {{background.palette}}</div>
+            <h2>Random Album Art Generator</h2>
+            <p><a href="{{title.originUrl}}" target="_blank">{{title.text}}</a> by <a href="{{artist.originUrl}}" target="_blank">{{artist.text}}</a></p>
         </div>
         <div class="cover__wrapper">
             <div class="cover__background {{background.classes}}" style="background-image: url({{background.url}});"></div>
             <main class="cover__content {{#parentSupervision}}cover__content--parental{{/parentSupervision}}">
                 <p class="cover__artist {{artist.classes}}">{{artist.text}}</p>
-
                 <p class="cover__title {{title.classes}}">{{title.text}}</p>
-
-
                 <img class="cover__parental" src="Parental_Advisory_label.svg">
-
             </main>
             <div class="cover__overlay"></div>
             <div class="record-container">
@@ -40,7 +36,7 @@
             </div>
         </div>
         <div class="page__footer">
-            made with ♥️ by <a href="http://marciodesousa.xyz" target="_blank">Márcio de Sousa</a>
+            made with ♥️ by <a href="http://marciodesousa.xyz" target="_blank">Márcio de Sousa</a>, 2020
         </div>
     </div>
 
