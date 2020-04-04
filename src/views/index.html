@@ -3,12 +3,12 @@
 <head>
     <title>Random Album Art Generator | marciodesousa</title>
     <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content=" rgb({{background.palette.color2}})">
+    <meta name="theme-color" content=" rgb({{background.majorColor}})">
     <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content=" rgb({{background.palette.color2}})">
+    <meta name="msapplication-navbutton-color" content=" rgb({{background.majorColor}})">
     <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content=" rgb({{background.palette.color2}})">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Luckiest+Guy&family=Arima+Madurai:wght@300&family=Bangers&display=swap" rel="stylesheet">
+    <meta name="apple-mobile-web-app-status-bar-style" content=" rgb({{background.majorColor}})">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Luckiest+Guy&family=Arima+Madurai:wght@300&family=Bangers&family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
     <link href="main.css" rel="stylesheet">
     <script>
         const palette = JSON.parse("{{background.paletteArray}}")
@@ -26,8 +26,8 @@
 
     <div class="page__wrapper">
         <div class="page__header">
-            <h2>Random Album Art Generator</h2>
-            <p><a href="{{title.originUrl}}" target="_blank">{{title.text}}</a> by <a href="{{artist.originUrl}}" target="_blank">{{artist.text}}</a></p>
+            <p class="header">Random Album Art Generator</p>
+            <p class="description"><a href="{{title.originUrl}}" target="_blank">{{title.text}}</a> by <a href="{{artist.originUrl}}" target="_blank">{{artist.text}}</a></p>
         </div>
         <div class="cover__wrapper">
             <div class="cover__background {{background.classes}}" style="background-image: url({{background.url}});"></div>
