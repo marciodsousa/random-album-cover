@@ -9,7 +9,8 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content=" rgb({{background.majorColor}})">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Luckiest+Guy&family=Arima+Madurai:wght@300&family=Bangers&family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
-    <link href="main.css" rel="stylesheet">
+    
+    <link href="dist/style.css" rel="stylesheet">
     <script>
         const palette = JSON.parse("{{background.paletteArray}}")
         const majorColor = "{{background.majorColor}}";
@@ -26,10 +27,10 @@
 
     <div class="page__wrapper">
         <div class="page__header">
-            <div class="header">Random Album Art Generator</div>
-            <div class="description"><a href="{{title.originUrl}}" target="_blank">{{title.text}}</a> by <a href="{{artist.originUrl}}" target="_blank">{{artist.text}}</a></div>
+            <div class="header info-text"><span>Random Album Art Generator</span></div>
+            <div class="description info-text"><span><a href="{{title.originUrl}}" target="_blank">{{title.text}}</a> by <a href="{{artist.originUrl}}" target="_blank">{{artist.text}}</a></span></div>
         </div>
-        <div class="cover__wrapper">
+        <div id="my-node" class="cover__wrapper">
             <div class="cover__background {{background.classes}}" style="background-image: url({{background.url}});"></div>
             <main class="cover__content {{#parentSupervision}}cover__content--parental{{/parentSupervision}}">
                 <p class="cover__artist {{artist.classes}}">{{artist.text}}</p>
@@ -41,11 +42,13 @@
                 <div class="record"></div>
             </div>
         </div>
-        <div class="page__footer">
-            made with ♥️ by <a href="http://marciodesousa.xyz" target="_blank">Márcio de Sousa</a>, 2020
+        <button id="buttonToClick">Download</button>
+        <div class="page__footer info-text">
+            <span>made with ♥️ by <a href="http://marciodesousa.xyz" target="_blank">Márcio de Sousa</a>, 2020</span>
         </div>
     </div>
-
+    <script>
+    </script>
 </body>
-
+<script src="dist/App.bundle.js"></script>
 </html>
