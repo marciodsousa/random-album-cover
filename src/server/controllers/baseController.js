@@ -6,26 +6,31 @@ const ColorThief = require('colorthief');
 const textMutations = {
     case: ["upper", "lower", "capitalize", "camel"],
     font: ["edgy", "classic", "cursive", "lucky"],
-    style: ["bold", "underline", "normal", "strikethrough"],
-    ending: ["none", "fullstop", "exclamation", "question", "ellipsis"],
-    background: ["bnw", "high-contrast", "low-contrast", "sepia", "low-brightness", "high-brightness", "hue-variation"]
-}
+    format: ["bold", "underline", "normal", "strikethrough"],
+    ending: ["fullstop", "exclamation", "question", "ellipsis"],
+    spacing: ["spaced", "close"],
+    style: ["glowing", "deep", "hero", "news", "outline"],
+    "position-x": ["start", "center", "end"],
+    "position-y": ["start", "center", "end"]
+};
+const backgroundMutatons = ["bnw", "high-contrast", "low-contrast", "sepia", "low-brightness", "high-brightness", "hue-variation"];
+const textPositionMutations = { x: ["start", "center", "end"], y: ["start", "center", "end"] };
 
 const albumStyles = [{
-    title: { font: "edgy", style: "normal", ending: "question", case: "lower" },
-    artist: { font: "lucky", style: "strikethrough", ending: "question", case: "lower" },
+    title: { font: "edgy", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "start", spacing: "spaced" },
+    artist: { font: "lucky", format: "strikethrough", ending: "question", case: "lower", style: "glowing", "position-y": "start", "position-x": "start" }
 }, {
-    title: { font: "edgy", style: "normal", ending: "question", case: "lower" },
-    artist: { font: "classic", style: "overline", ending: "question", case: "lower" },
+    title: { font: "edgy", format: "normal", ending: "question", case: "lower", "position-y": "center", "position-x": "center", spacing: "spaced" },
+    artist: { font: "classic", format: "overline", ending: "question", case: "lower", style: "outline", "position-y": "center", "position-x": "center" },
 }, {
-    title: { font: "lucky", style: "normal", ending: "question", case: "lower" },
-    artist: { font: "cursive", style: "normal", ending: "question", case: "lower" },
+    title: { font: "lucky", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "end" },
+    artist: { font: "cursive", format: "normal", ending: "question", case: "lower", style: "hero", "position-y": "start", "position-x": "end" }
 }, {
-    title: { font: "classic", style: "normal", ending: "question", case: "capitalize" },
-    artist: { font: "lucky", style: "normal", ending: "question", case: "upper" },
+    title: { font: "classic", format: "normal", ending: "question", case: "capitalize", "position-y": "end", "position-x": "start" },
+    artist: { font: "lucky", format: "normal", ending: "question", case: "upper", "position-y": "end", "position-x": "start", spacing: "spaced" },
 }, {
-    title: { font: "edgy", style: "italic", ending: "question", case: "camel" },
-    artist: { font: "cursive", style: "normal", ending: "question", case: "lower" },
+    title: { font: "edgy", format: "italic", ending: "question", case: "camel", "position-y": "start", "position-x": "center" },
+    artist: { font: "cursive", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "center", spacing: "spaced" },
 }];
 
 exports.getFullInfo = async(req, res) => {
@@ -47,7 +52,7 @@ exports.getWikiquoteTitle = async(req, res) => {
 
     console.log(response.request.res.responseUrl);
     const dom = new JSDOM(response.data);
-    const eligibleQuotes = ["untitled"];
+    const eligibleQuotes = [];
 
     dom.window.document.querySelectorAll('#bodyContent li:not([class]), #bodyContent dd:not([class])').forEach(element => {
         if (!element.closest(".mw-parser-output") || element.closest("li")) return true;
@@ -58,9 +63,13 @@ exports.getWikiquoteTitle = async(req, res) => {
 
     const numberWordsToKeep = getRandomInt(3, 5);
     let selectedQuote = eligibleQuotes[getRandomInt(0, eligibleQuotes.length)];
-    const ret = { originUrl: response.request.res.responseUrl };
+    const ret = { originUrl: response.request.res.responseUrl, selectedQuote: "untitled" };
     if (!selectedQuote) return ret;
-    selectedQuote = selectedQuote.slice(0, selectedQuote.length).split(" ").slice(-1 * numberWordsToKeep).join(" ");
+    try {
+        selectedQuote = selectedQuote.slice(0, selectedQuote.length).split(" ").slice(-1 * numberWordsToKeep).join(" ");
+    } catch (e) {
+        console.log(e);
+    }
     ret.selectedQuote = selectedQuote;
     return ret;
 
@@ -144,6 +153,12 @@ function titleTransformer(titleData, titleStyle) {
         }
     })
 
+    if (titleData.text.length < 10) {
+        titleData.classes.push("size--large");
+    } else if (titleData.text.length > 20) {
+        titleData.classes.push("size--small");
+    }
+
     titleData.classes = titleData.classes.join(" ");
     return titleData;
 }
@@ -159,7 +174,11 @@ function artistTransformer(artistData, artistStyle) {
                 artistData.classes.push(`${styleElement}--${artistStyle[styleElement]}`)
         }
     })
-
+    if (artistData.text.length < 15) {
+        artistData.classes.push("size--large");
+    } else if (artistData.text.length > 30) {
+        artistData.classes.push("size--small");
+    }
     artistData.classes = artistData.classes.join(" ");
     return artistData;
 }
