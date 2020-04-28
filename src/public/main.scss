@@ -7,6 +7,24 @@ body {
     height: 100%;
 }
 
+.page__styles {
+    color: black;
+    width: 0px;
+    height: 100vh;
+    position: fixed;
+    background-color: white;
+    transition: width 200ms ease;
+    overflow-y: auto;
+    visibility: hidden;
+}
+
+.page__styles.opened {
+    width: 195px;
+    z-index: 999;
+    transition: width 200ms ease;
+    visibility: visible;
+}
+
 .info-text {
     justify-self: center;
     & span {
@@ -30,6 +48,9 @@ body {
 
 a {
     color: var(--accent-color);
+    &:hover {
+        color: var(--accent-color2);
+    }
 }
 
 .page__background {
@@ -106,6 +127,7 @@ body.page--dark {
 .cover__background {
     width: 750px;
     height: 750px;
+    border-radius: 5px;
     position: relative;
     box-shadow: 16px 1px 26px -9px #000000;
     background-size: cover;
@@ -113,7 +135,8 @@ body.page--dark {
 
 .cover__overlay {
     position: absolute;
-    background-image: url("overlay.png");
+    background-image: url("./overlay.png");
+    border-radius: 5px;
     width: 750px;
     height: 750px;
     z-index: 3;
@@ -123,19 +146,20 @@ body.page--dark {
 
 .record-container {
     z-index: -1;
+    margin-top: 10px;
     left: 44%;
     display: inline-block;
     overflow: hidden;
-    width: 750px;
-    height: 750px;
+    width: 730px;
+    height: 730px;
     border-radius: 10px;
     position: absolute;
 }
 
 .record {
     position: relative;
-    width: 750px;
-    height: 750px;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     background: linear-gradient(30deg, transparent 40%, rgba(42, 41, 40, .85) 40%) no-repeat 100% 0, linear-gradient(60deg, rgba(42, 41, 40, .85) 60%, transparent 60%) no-repeat 0 100%, repeating-radial-gradient(#2a2928, #2a2928 4px, #ada9a0 5px, #2a2928 6px);
     background-size: 50% 100%, 100% 50%, 100% 100%;
@@ -150,7 +174,7 @@ body.page--dark {
     width: 175px;
     height: 175px;
     border-radius: 50%;
-    box-shadow: 0 0 0 4px var(--accent-color), inset 0 0 0 82px var(--accent-color);
+    box-shadow: 0 0 0 4px var(--accent-color2), inset 0 0 0 82px var(--accent-color2);
     background: #b5ac9a;
     content: '';
 }
@@ -289,7 +313,7 @@ body.page--dark {
     }
     &--hero {
         color: #FFFFFF;
-        text-shadow: -5px 5px 0px #00e6e6, -10px 10px 0px #01cccc, -15px 15px 0px #00bdbd;
+        text-shadow: -5px 5px 0px var(--accent-color2), -10px 10px 0px var(--accent-color2), -15px 15px 0px var(--accent-color2);
     }
     &--outline {
         color: #FFFFFF;

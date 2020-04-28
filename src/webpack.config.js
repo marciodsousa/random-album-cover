@@ -43,9 +43,12 @@ const styles = {
 
 const images = {
     test: /\.(png|svg|jpg|gif)$/,
-    use: [
-        'file-loader',
-    ],
+    use: [{
+        loader: 'file-loader',
+        options: {
+            esModule: false,
+        },
+    }],
 }
 
 // We can also use plugins - this one will compress the crap out of our JS

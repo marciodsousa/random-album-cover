@@ -17,7 +17,8 @@
     </script>
     <style>
          :root {
-            --accent-color: rgb({{background.palette.color2}});
+            --accent-color: rgb({{background.palette.color1}});
+            --accent-color2: rgb({{background.palette.color2}});
         }
     </style>
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
@@ -31,7 +32,19 @@
 
 <body {{#isCoverImageDark}}class="page--dark" {{/isCoverImageDark}}>
     <div class="page__background" style="background-image: url({{background.url}});"></div>
+    <div class="page__styles">
+        <p>Artist Variations </p>
+        <div class="artist_variations__wrapper">
+            
+        </div>
 
+        <p>Title </p>
+
+        <div class="title_variations__wrapper">
+            
+        </div>
+
+    </div>
     <div class="page__wrapper">
         <div class="page__header">
             <div class="header info-text"><span>Random Album Art Generator</span></div>
