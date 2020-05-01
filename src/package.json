@@ -3,11 +3,13 @@
     "version": "1.0.0",
     "description": "Node app to generate random album cover",
     "scripts": {
-        "prod": "webpack &6 PORT=8001 pm2 start /usr/share/nginx/html/album-cover/current/start.js --name=album-cover-app",
-        "prod-reload": "webpack &6 PORT=8001 pm2 reload /usr/share/nginx/html/album-cover/current/start.js --name=album-cover-app",
+        "pm2-start": "webpack &6 PORT=8001 pm2 start /usr/share/nginx/html/album-cover/current/start.js --name=album-cover-app",
+        "pm2-reload": "webpack &6 PORT=8001 pm2 reload /usr/share/nginx/html/album-cover/current/start.js --name=album-cover-app",
         "watch": "nodemon ./start.js --ignore public/",
         "start": "yarn && concurrently \"yarn watch\" \"yarn assets\" --names \"💻,📦\" --prefix name",
-        "assets": "webpack -w --display-max-modules 0"
+        "assets": "webpack -w --display-max-modules 0",
+        "prod-reload": "webpack && yarn pm2-reload",
+        "prod-start": "webpack && yarn pm2-start"
     },
     "repository": {
         "type": "git",
