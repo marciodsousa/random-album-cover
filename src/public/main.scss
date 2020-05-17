@@ -47,9 +47,9 @@ body {
 }
 
 a {
-    color: var(--accent-color);
+    color: var(--accent-color2);
     &:hover {
-        color: var(--accent-color2);
+        color: var(--accent-color1);
     }
 }
 
@@ -104,6 +104,8 @@ body.page--dark {
 }
 
 .cover__wrapper {
+    opacity: .95;
+    filter: blur(0.6px);
     grid-column: 1;
     grid-row: 2;
     margin: auto;
@@ -129,19 +131,48 @@ body.page--dark {
     height: 750px;
     border-radius: 5px;
     position: relative;
-    box-shadow: 16px 1px 26px -9px #000000;
+    // box-shadow: 16px 1px 26px -9px #000000;
+    // filter: drop-shadow(2px 4px 6px black);
     background-size: cover;
+}
+
+.cover__before {
+    width: 750px;
+    left: -149px;
+    position: absolute;
+    z-index: -999999;
+    border: 150px solid rgba(0, 0, 0, 0.3);
+    border-bottom-width: 0px;
+    /* border-top-width: 158px; */
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    filter: blur(14px);
+    bottom: 0;
+}
+
+.cover__before__ {
+    width: 745px;
+    left: -3px;
+    position: absolute;
+    z-index: -999999;
+    border: 5px solid rgba(0, 0, 0, 1);
+    border-bottom-width: 0px;
+    border-radius: 16px;
+    filter: blur(3px);
+    bottom: -3px;
 }
 
 .cover__overlay {
     position: absolute;
-    background-image: url("./overlay.png");
+    background-size: cover;
+    background-image: url("overlay.png");
     border-radius: 5px;
     width: 750px;
     height: 750px;
     z-index: 3;
-    mix-blend-mode: overlay;
-    filter: opacity(0.3);
+    mix-blend-mode: screen;
+    filter: opacity(0.8);
 }
 
 .record-container {
@@ -154,6 +185,8 @@ body.page--dark {
     height: 730px;
     border-radius: 10px;
     position: absolute;
+    // box-shadow: -55px 15px 14px -8px rgba(0, 0, 0, 0.5);
+    padding-bottom: 8px;
 }
 
 .record {
