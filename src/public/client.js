@@ -1,19 +1,41 @@
 import "./main.scss";
-import DomToImage from 'dom-to-image';
+import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 
-// document.getElementById("buttonToClick").addEventListener("click", () => {
+document.getElementById("download").addEventListener("click", () => {
+    const targetElement = document.querySelector(".cover__wrapper");
+    const blacklistElement = document.querySelector(".cover__overlay");
+    const initialState = blacklistElement.style.display;
+    blacklistElement.style.display = "none";
 
-//     DomToImage.toBlob(document.getElementById('my-node'))
-//         .then(function(blob) {
-//             saveAs(blob, 'my-node.png');
-//         });
-// });
+    html2canvas(targetElement).then(function(canvas) {
+
+        blacklistElement.style.display = initialState;
+        // canvas.toBlob(function(blob) {
+        //     saveAs(blob, 'my-node.png');
+        // }, 'image/jpeg', 0.95); // JPEG at 95% quality
+
+        var base64image = canvas.toDataURL("image/png");
+
+        var url = base64image;
+
+        fetch(url)
+            .then(res => res.blob())
+            .then(blob => saveAs(blob, 'my-node.png'));
+
+    });
+
+
+});
 
 
 document.querySelector(".header.info-text").addEventListener("click", () => {
 
     document.querySelector(".page__styles").classList.toggle("opened");
+});
+document.querySelector(".content__wrapper").addEventListener("click", (event) => {
+
+    event.currentTarget.classList.toggle("opened");
 });
 
 

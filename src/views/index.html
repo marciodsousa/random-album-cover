@@ -9,7 +9,7 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content=" rgb({{background.majorColor}})">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Luckiest+Guy&family=Arima+Madurai:wght@300&family=Bangers&family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
-    
+
     <link href="dist/style.css" rel="stylesheet">
     <script>
         const palette = JSON.parse("{{background.paletteArray}}")
@@ -19,6 +19,7 @@
          :root {
             --accent-color: rgb({{background.palette.color1}});
             --accent-color2: rgb({{background.palette.color2}});
+            --accent-color3: rgb({{background.palette.color3}});
         }
     </style>
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
@@ -35,13 +36,13 @@
     <div class="page__styles">
         <p>Artist Variations </p>
         <div class="artist_variations__wrapper">
-            
+
         </div>
 
         <p>Title </p>
 
         <div class="title_variations__wrapper">
-            
+
         </div>
 
     </div>
@@ -49,22 +50,31 @@
         <div class="page__header">
             <div class="header info-text"><span>Random Album Art Generator</span></div>
             <div class="description info-text"><span><a href="{{title.originUrl}}" target="_blank">{{title.text}}</a> by <a href="{{artist.originUrl}}" target="_blank">{{artist.text}}</a></span></div>
+
+            <div class="actions__wrapper">
+                <button id="download">Download</button>
+                <button id="refresh">Refresh</button>
+            </div>
         </div>
-        <div id="my-node" class="cover__wrapper">
-            <div class="cover__background {{background.classes}}" style="background-image: url({{background.url}});"></div>
-            <main class="cover__content {{#parentSupervision}}cover__content--parental{{/parentSupervision}}">
-                <div class="cover__artist {{artist.classes}}">{{artist.text}}</div>
-                <div class="cover__title {{title.classes}}">{{title.text}}</div>
-                <img class="cover__parental" src="Parental_Advisory_label.svg">
-            </main>
-            <div class="cover__overlay"></div>
-            <div class="cover__before"></div>
-            <div class="cover__before__"></div>
+        <div class="content__wrapper">
+            <div class="cover__wrapper">
+                <div class="cover__background {{background.classes}}" style="background-image: url({{background.url}});"></div>
+                <main class="cover__content {{#parentSupervision}}cover__content--parental{{/parentSupervision}}">
+                    <div class="cover__artist {{artist.classes}}">{{artist.text}}</div>
+                    <div class="cover__title {{title.classes}}">{{title.text}}</div>
+                    <img class="cover__parental" src="Parental_Advisory_label.svg">
+                </main>
+                <div class="cover__overlay"></div>
+            </div>
+            <div class="cover__shadows">
+                <div class="cover__shadow--back"></div>
+                <div class="cover__shadow--close"></div>
+            </div>
             <div class="record-container">
+                <div class="record__shadow"></div>
                 <div class="record"></div>
             </div>
         </div>
-        {{! <button id="buttonToClick">Download</button> }}
         <div class="page__footer info-text">
             <span>made with ♥️ by <a href="http://marciodesousa.xyz" target="_blank">Márcio de Sousa</a>, 2020</span>
         </div>
@@ -73,4 +83,5 @@
     </script>
 </body>
 <script src="dist/App.bundle.js"></script>
+
 </html>
