@@ -56,12 +56,12 @@ select {
 }
 
 .btn {
-    width: 50px;
-    height: 50px;
+    width: 4rem;
+    height: 4rem;
     margin-top: 5px;
     background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 27px;
-    font-size: x-large;
+    border-radius: 35px;
+    font-size: 2rem;
     display: flex;
     cursor: pointer;
     &:hover {
@@ -70,6 +70,11 @@ select {
     * {
         margin: auto;
     }
+}
+
+.actions__wrapper {
+    position: absolute;
+    right: 0;
 }
 
 .header__wrapper {
@@ -556,8 +561,14 @@ $grid-sizes: 1,
 /* Portrait and Landscadgdfpe */
 
 @media only screen and (max-device-width: 750px) {
+    .btn {
+        width: 10rem;
+        height: 10rem;
+        border-radius: 100px;
+        font-size: 5rem;
+    }
     .page__wrapper {
-        grid-template-rows: 60px auto 80px;
+        grid-template-rows: 60px auto 15rem 80px;
     }
     .header {
         font-size: 4em;
@@ -579,7 +590,15 @@ $grid-sizes: 1,
     .record-container {
         display: none;
     }
+    .actions__wrapper {
+        grid-row: 3;
+        display: flex;
+        margin: auto;
+        position: relative;
+        right: inherit;
+    }
     .page__footer {
         font-size: 2.5em;
+        grid-row: 4;
     }
 }

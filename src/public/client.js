@@ -17,6 +17,7 @@ Object.keys(mutationsModel.text).forEach(textMutationCategory => {
             <label class="mutation__title" for="${textMutationCategory}">${capitalizeFirstLetter(textMutationCategory)}</label>
 
             <select name="${textMutationCategory}" id="${textMutationCategory}">
+            <option value="${textMutationCategory}--">N/A</option>
                 ${category.options.map(option => `<option value="${textMutationCategory}--${option}">${capitalizeFirstLetter(option)}</option>`)}
             </select>
         </div>`;
@@ -25,9 +26,9 @@ Object.keys(mutationsModel.text).forEach(textMutationCategory => {
         <div>
             <label class="mutation__title">${capitalizeFirstLetter(textMutationCategory)}</label>
             ${category.options.map(option =>
-                `<input type="checkbox" id="${textMutationCategory}--${option}" name="${textMutationCategory}--${option}">
+            `<input type="checkbox" id="${textMutationCategory}--${option}" name="${textMutationCategory}--${option}">
                 <label class="mutation__option" for="${textMutationCategory}--${option}">${option}</label>`
-            )}
+        )}
         </div>`;
     }
 
@@ -52,7 +53,7 @@ document.querySelector(".page__styles").addEventListener('change', event => {
         if (className.startsWith(classCategory)) {
             targetElement.classList.remove(className);
         }
-      });
+    });
 
     targetElement.classList.toggle(classToAdd);
 });
@@ -75,6 +76,22 @@ document.getElementById("refresh").addEventListener("click", () => {
 
 document.getElementById("tweak").addEventListener("click", () => {
     document.querySelector(".page__styles").classList.toggle("opened");
+});
+
+document.getElementById("dump").addEventListener("click", () => {
+    const config = { artist: {}, title: {}, background: {} };
+
+    document.querySelector(".cover__artist").classList.forEach(className => {
+        const splitClassName = className.split("--");
+        config.artist[splitClassName[0]] = splitClassName[1];
+    });
+
+    document.querySelector(".cover__title").classList.forEach(className => {
+        const splitClassName = className.split("--");
+        config.title[splitClassName[0]] = splitClassName[1];
+    });
+
+    console.log(JSON.stringify(config));
 });
 
 document.querySelector(".content__wrapper").addEventListener("click", event => {
