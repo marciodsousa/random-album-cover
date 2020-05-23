@@ -6,24 +6,44 @@ body {
     margin: auto;
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
 }
 
 .page__styles {
-    color: black;
-    width: 0px;
+    color: white;
+    transform: translateX(-235px);
     height: 100vh;
     position: fixed;
-    background-color: white;
-    transition: width 200ms ease;
+    background-color: #22264c;
+    transition: transform 200ms ease;
     overflow-y: auto;
     visibility: hidden;
+    .title {
+        color: #eb305d;
+        background-color: #293059;
+        letter-spacing: 0.6em;
+        text-transform: uppercase;
+        padding: 9px;
+    }
 }
 
 .page__styles.opened {
-    width: 195px;
+    width: 235px;
     z-index: 999;
-    transition: width 200ms ease;
+    transform: translateX(0px);
+    transition: transform 200ms ease;
     visibility: visible;
+}
+
+label.mutation__title {
+    display: block;
+    padding: 3px;
+    margin-top: 3px;
+}
+
+select {
+    width: 95%;
+    margin: 5px
 }
 
 .info-text {
@@ -123,10 +143,6 @@ body.page--dark {
     grid-row: 1;
     grid-column: 1;
     margin: auto;
-}
-
-.actions__wrapper {
-    // display: none;
 }
 
 .page__footer {
@@ -318,17 +334,44 @@ body.page--dark {
 }
 
 .font {
-    &--lucky {
-        font-family: 'Luckiest Guy', cursive;
+    // artist
+    &--fruktur {
+        font-family: 'Fruktur', cursive;
     }
-    &--edgy {
+    &--bangers {
         font-family: 'Bangers', cursive;
     }
-    &--cursive {
+    &--pacifico {
         font-family: 'Pacifico', cursive;
     }
-    &--classic {
+    &--arima {
         font-family: 'Arima Madurai', cursive;
+    }
+    &--quicksand {
+        font-family: 'Quicksand', cursive;
+    }
+    &--open {
+        font-family: 'Open Sans', cursive;
+    }
+    &--roboto {
+        font-family: 'Roboto', cursive;
+    }
+    // artist
+    &--monoton {
+        font-family: 'Monoton', cursive;
+    }
+    &--allan {
+        font-family: 'Allan', cursive;
+    }
+    &--megrim {
+        font-family: 'Megrim', cursive;
+    }
+    // Artist
+    &--bungee {
+        font-family: 'Bungee', cursive;
+    }
+    &--biorhyme {
+        font-family: 'BioRhyme', cursive;
     }
 }
 
@@ -365,6 +408,21 @@ body.page--dark {
     }
     &--camel {
         text-transform: lowercase;
+    }
+}
+
+.ending {
+    &--fullstop::after {
+        content: ".";
+    }
+    &--exclamation::after {
+        content: "!";
+    }
+    &--question::after {
+        content: "?";
+    }
+    &--elipsis::after {
+        content: "...";
     }
 }
 
@@ -506,6 +564,14 @@ $grid-sizes: 1,
     }
     .description {
         font-size: 2em;
+    }
+    .content__wrapper {
+        &.opened {
+            transform: translateX(0px);
+            .record-container {
+                transform: translateX(0px);
+            }
+        }
     }
     .cover__wrapper {
         width: 750px;

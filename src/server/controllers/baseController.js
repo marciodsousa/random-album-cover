@@ -2,35 +2,23 @@ const axios = require('axios');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const ColorThief = require('colorthief');
-
-const textMutations = {
-    case: ["upper", "lower", "capitalize", "camel"],
-    font: ["edgy", "classic", "cursive", "lucky"],
-    format: ["bold", "underline", "normal", "strikethrough"],
-    ending: ["fullstop", "exclamation", "question", "ellipsis"],
-    spacing: ["spaced", "close"],
-    style: ["glowing", "deep", "hero", "news", "outline"],
-    "position-x": ["start", "center", "end"],
-    "position-y": ["start", "center", "end"]
-};
-const backgroundMutatons = ["bnw", "high-contrast", "low-contrast", "sepia", "low-brightness", "high-brightness", "hue-variation"];
-const textPositionMutations = { x: ["start", "center", "end"], y: ["start", "center", "end"] };
+const mutationsModel = require("../../mutationsModel");
 
 const albumStyles = [{
-    title: { font: "edgy", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "start", spacing: "spaced" },
+    title: { font: "pacifico", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "start", spacing: "spaced" },
     artist: { font: "lucky", format: "strikethrough", ending: "question", case: "lower", style: "glowing", "position-y": "start", "position-x": "start" }
 }, {
-    title: { font: "edgy", format: "normal", ending: "question", case: "lower", "position-y": "center", "position-x": "center", spacing: "spaced" },
-    artist: { font: "classic", format: "overline", ending: "question", case: "lower", style: "outline", "position-y": "center", "position-x": "center" },
+    title: { font: "allan", format: "normal", ending: "question", case: "lower", "position-y": "center", "position-x": "center", spacing: "spaced" },
+    artist: { font: "monoton", format: "overline", ending: "question", case: "lower", style: "outline", "position-y": "center", "position-x": "center" },
 }, {
-    title: { font: "lucky", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "end" },
-    artist: { font: "cursive", format: "normal", ending: "question", case: "lower", style: "hero", "position-y": "start", "position-x": "end" }
+    title: { font: "fruktur", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "end" },
+    artist: { font: "pacifico", format: "normal", ending: "question", case: "lower", style: "hero", "position-y": "start", "position-x": "end" }
 }, {
-    title: { font: "classic", format: "normal", ending: "question", case: "capitalize", "position-y": "end", "position-x": "start" },
-    artist: { font: "lucky", format: "normal", ending: "question", case: "upper", "position-y": "end", "position-x": "start", spacing: "spaced" },
+    title: { font: "bangers", format: "normal", ending: "question", case: "capitalize", "position-y": "end", "position-x": "start" },
+    artist: { font: "megrim", format: "normal", ending: "question", case: "upper", "position-y": "end", "position-x": "start", spacing: "spaced" },
 }, {
-    title: { font: "edgy", format: "italic", ending: "question", case: "camel", "position-y": "start", "position-x": "center" },
-    artist: { font: "cursive", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "center", spacing: "spaced" },
+    title: { font: "biorhyme", format: "italic", ending: "question", case: "camel", "position-y": "start", "position-x": "center" },
+    artist: { font: "monoton", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "center", spacing: "spaced" },
 }];
 
 exports.getFullInfo = async(req, res) => {
@@ -104,8 +92,6 @@ exports.getAllInfo = async(req, res) => {
 
     const palette = await getPalette(backgroundInfo.photoEndpoint);
     const majorColor = await getMajorColor(backgroundInfo.photoEndpoint);
-    const averageBrightness = 0.299 * majorColor[0] + 0.587 * majorColor[1] + 0.114 * majorColor[2];
-    const isCoverImageDark = averageBrightness < 127;
 
     const paletteObj = {
         color1: palette[0].join(","),
@@ -117,10 +103,15 @@ exports.getAllInfo = async(req, res) => {
         title: { text: albumInfo.selectedQuote, originUrl: albumInfo.originUrl },
         background: { url: backgroundInfo.photoEndpoint, originUrl: backgroundInfo.originUrl, majorColor, palette: paletteObj, paletteArray: JSON.stringify(palette) }
     });
-    albumData.isCoverImageDark = isCoverImageDark;
+    albumData.isCoverImageDark = isColorDark(majorColor);
     res.render('index', albumData);
 }
 
+function isColorDark(colorRGBArray) {
+    const averageBrightness = 0.299 * colorRGBArray[0] + 0.587 * colorRGBArray[1] + 0.114 * colorRGBArray[2];
+
+    return averageBrightness < 127;
+}
 /**
  * Returns a random integer between min (inclusive) and max (inclusive).
  * The value is no lower than min (or the next integer greater than min
