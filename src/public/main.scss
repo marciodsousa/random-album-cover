@@ -35,10 +35,32 @@ body {
     }
 }
 
+.btn {
+    width: 50px;
+    height: 50px;
+    margin-top: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 27px;
+    font-size: x-large;
+    display: flex;
+    cursor: pointer;
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+    * {
+        margin: auto;
+    }
+}
+
+.header__wrapper {
+    display: inline-flex;
+}
+
 .header {
     font-family: 'Open Sans', sans-serif;
     font-size: 2em;
     font-weight: 600;
+    margin: 0 15 0 15;
 }
 
 .description {
@@ -78,6 +100,12 @@ body.page--dark {
             background-color: rgba(0, 0, 0, 0.5);
         }
     }
+    .btn {
+        background-color: rgba(0, 0, 0, 0.5);
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+    }
 }
 
 .page__wrapper {
@@ -98,7 +126,7 @@ body.page--dark {
 }
 
 .actions__wrapper {
-    display: none;
+    // display: none;
 }
 
 .page__footer {
@@ -153,7 +181,7 @@ body.page--dark {
     border-radius: 5px;
     position: relative;
     box-shadow: inset 0px 3px 2px 0px rgba(255, 255, 255, 0.2), inset 0px -2px 5px 3px rgba(0, 0, 0, 0.2);
-    background-size: cover;
+    object-fit: cover;
 }
 
 .cover__shadow {
@@ -180,7 +208,6 @@ body.page--dark {
         z-index: -999999;
         border: 150px solid rgba(0, 0, 0, 0.3);
         border-bottom-width: 0px;
-        /* border-top-width: 158px; */
         border-right-color: transparent;
         border-bottom-color: transparent;
         border-left-color: transparent;
@@ -197,8 +224,8 @@ body.page--dark {
     width: $coverDimension;
     height: $coverDimension;
     z-index: 3;
-    mix-blend-mode: screen;
-    filter: opacity(0.8);
+    // mix-blend-mode: screen;
+    // filter: opacity(0.8);
 }
 
 .record-container {
@@ -388,7 +415,7 @@ body.page--dark {
     }
     &--outline {
         color: #FFFFFF;
-        text-shadow: 2px 2px 0 #4074b5, 2px -2px 0 #4074b5, -2px 2px 0 #4074b5, -2px -2px 0 #4074b5, 2px 0px 0 #4074b5, 0px 2px 0 #4074b5, -2px 0px 0 #4074b5, 0px -2px 0 #4074b5;
+        text-shadow: 2px 2px 0 var(--accent-color2), 2px -2px 0 var(--accent-color2), -2px 2px 0var(--accent-color2), -2px -2px 0 var(--accent-color2), 2px 0px 0 var(--accent-color2), 0px 2px 0 var(--accent-color2), -2px 0px 0 var(--accent-color2), 0px -2px 0 var(--accent-color2);
     }
 }
 

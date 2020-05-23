@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <title>Random Album Art Generator | marciodesousa</title>
     <!-- Chrome, Firefox OS and Opera -->
@@ -28,6 +27,7 @@
     <link rel="manifest" href="/icons/site.webmanifest">
     <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
+
     <meta name="theme-color" content="#ffffff">
 </head>
 
@@ -48,17 +48,18 @@
     </div>
     <div class="page__wrapper">
         <div class="page__header">
-            <div class="header info-text"><span>Random Album Art Generator</span></div>
-            <div class="description info-text"><span><a href="{{title.originUrl}}" target="_blank">{{title.text}}</a> by <a href="{{artist.originUrl}}" target="_blank">{{artist.text}}</a></span></div>
-
-            <div class="actions__wrapper">
-                <button id="download">Download</button>
-                <button id="refresh">Refresh</button>
+            <div class="header__wrapper">
+                <div class="btn" id="download" title="Download your album art"><span>📥</span></div>
+                <div class="header info-text"><span>Random Album Art Generator</span></div>
+                <div class="btn" id="refresh" title="Refresh"><span>🔄</span></div>
+                <div class="btn" id="tweak" title="Tweak your album art"><span>☢️</span></div>
             </div>
+            <div class="description info-text"><span><a href="{{title.originUrl}}" target="_blank">{{title.text}}</a> by <a href="{{artist.originUrl}}" target="_blank">{{artist.text}}</a> | <a href="{{background.originUrl}}" target="_blank">picture credit</a></span></div>
+
         </div>
         <div class="content__wrapper">
             <div class="cover__wrapper">
-                <div class="cover__background {{background.classes}}" style="background-image: url({{background.url}});"></div>
+                <img class="cover__background {{background.classes}}" src="{{background.url}}" />
                 <main class="cover__content {{#parentSupervision}}cover__content--parental{{/parentSupervision}}">
                     <div class="cover__artist {{artist.classes}}">{{artist.text}}</div>
                     <div class="cover__title {{title.classes}}">{{title.text}}</div>

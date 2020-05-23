@@ -2,43 +2,6 @@ import "./main.scss";
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 
-document.getElementById("download").addEventListener("click", () => {
-    const targetElement = document.querySelector(".cover__wrapper");
-    const blacklistElement = document.querySelector(".cover__overlay");
-    const initialState = blacklistElement.style.display;
-    blacklistElement.style.display = "none";
-
-    html2canvas(targetElement).then(function(canvas) {
-
-        blacklistElement.style.display = initialState;
-        // canvas.toBlob(function(blob) {
-        //     saveAs(blob, 'my-node.png');
-        // }, 'image/jpeg', 0.95); // JPEG at 95% quality
-
-        var base64image = canvas.toDataURL("image/png");
-
-        var url = base64image;
-
-        fetch(url)
-            .then(res => res.blob())
-            .then(blob => saveAs(blob, 'my-node.png'));
-
-    });
-
-
-});
-
-
-document.querySelector(".header.info-text").addEventListener("click", () => {
-
-    document.querySelector(".page__styles").classList.toggle("opened");
-});
-document.querySelector(".content__wrapper").addEventListener("click", (event) => {
-
-    event.currentTarget.classList.toggle("opened");
-});
-
-
 const textMutations = {
     case: ["upper", "lower", "capitalize", "camel"],
     font: ["edgy", "classic", "cursive", "lucky"],
@@ -67,9 +30,37 @@ Object.keys(textMutations).forEach(textMudationCategory => {
 });
 
 
-
+// Event listeners
 document.querySelector(".page__styles").addEventListener('change', event => {
     const selectorToUpdate = event.target.closest(".artist_variations__wrapper") ? ".cover__artist" : ".cover__title";
     const classToToggle = event.target.getAttribute('name');
     document.querySelector(selectorToUpdate).classList.toggle(classToToggle);
+});
+
+document.getElementById("download").addEventListener("click", () => {
+    const targetElement = document.querySelector(".cover__wrapper");
+
+    html2canvas(targetElement, { useCORS: true }).then(canvas => {
+        const base64image = canvas.toDataURL("image/png");
+        const url = base64image;
+
+        fetch(url)
+            .then(res => res.blob())
+            .then(blob => saveAs(blob, 'random-album-cover.png'));
+    });
+});
+document.getElementById("refresh").addEventListener("click", () => {
+    location.reload();
+});
+
+document.getElementById("tweak").addEventListener("click", () => {
+    document.querySelector(".page__styles").classList.toggle("opened");
+});
+
+document.querySelector(".content__wrapper").addEventListener("click", event => {
+    event.currentTarget.classList.toggle("opened");
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".content__wrapper").classList.toggle("opened");
 });

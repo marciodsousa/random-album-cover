@@ -82,9 +82,9 @@ exports.getFlickrPhoto = async(req, res) => {
     const dom = new JSDOM(response.data);
     const photoDom = dom.window.document.querySelectorAll(".Photo")[5]; //get the 5th one
     const photoEndpoint = photoDom.querySelector("img").getAttribute("src").replace("_m.", "_b.")
+    const originUrl = `https://www.flickr.com${photoDom.querySelector("a").getAttribute("href")}`;
 
-
-    return { photoEndpoint, originUrl: response.request.res.responseUrl };
+    return { photoEndpoint, originUrl };
 }
 
 exports.getAllInfo = async(req, res) => {

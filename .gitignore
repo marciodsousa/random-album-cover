@@ -1,2 +1,3 @@
 travis_ssh_key*
 !travis_ssh_key.enc
+src/yarn-error.log
