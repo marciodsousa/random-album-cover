@@ -2,24 +2,38 @@ const axios = require('axios');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const ColorThief = require('colorthief');
-const mutationsModel = require("../../mutationsModel");
 
-const albumStyles = [{
-    title: { font: "pacifico", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "start", spacing: "spaced" },
-    artist: { font: "lucky", format: "strikethrough", ending: "question", case: "lower", style: "glowing", "position-y": "start", "position-x": "start" }
-}, {
-    title: { font: "allan", format: "normal", ending: "question", case: "lower", "position-y": "center", "position-x": "center", spacing: "spaced" },
-    artist: { font: "monoton", format: "overline", ending: "question", case: "lower", style: "outline", "position-y": "center", "position-x": "center" },
-}, {
-    title: { font: "fruktur", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "end" },
-    artist: { font: "pacifico", format: "normal", ending: "question", case: "lower", style: "hero", "position-y": "start", "position-x": "end" }
-}, {
-    title: { font: "bangers", format: "normal", ending: "question", case: "capitalize", "position-y": "end", "position-x": "start" },
-    artist: { font: "megrim", format: "normal", ending: "question", case: "upper", "position-y": "end", "position-x": "start", spacing: "spaced" },
-}, {
-    title: { font: "biorhyme", format: "italic", ending: "question", case: "camel", "position-y": "start", "position-x": "center" },
-    artist: { font: "monoton", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "center", spacing: "spaced" },
-}];
+const albumStyles = [
+    { "artist": { "font": "fruktur", "style": "hero", "position-x": "start", "position-y": "start" }, "title": { "font": "biorhyme", "case": "lower", "ending": "question", "spacing": "close", "position-x": "end", "position-y": "end" } },
+    { "artist": { "font": "megrim", "spacing": "spaced", "case": "upper", "position-x": "center", "position-y": "center" }, "title": { "case": "lower", "font": "pacifico", "ending": "ellipsis", "spacing": "", "position-y": "center", "position-x": "center" } },
+    { "artist": { "font": "bangers", "spacing": "", "style": "news", "position-y": "end", "position-x": "end", "case": "upper" }, "title": { "font": "biorhyme", "case": "capitalize", "ending": "question", "spacing": "close", "position-x": "end", "position-y": "end", "format": "underline" } },
+    { "artist": { "font": "monoton", "size": "large", "case": "lower", "format": "strikethrough", "ending": "", "position-x": "end", "position-y": "start" }, "title": { "size": "large", "font": "allan", "case": "upper", "format": "bold", "ending": "exclamation", "spacing": "", "position-x": "end", "position-y": "start" } },
+    { "artist": { "size": "large", "case": "lower", "ending": "", "position-y": "start", "font": "bungee", "style": "hero", "spacing": "spaced", "position-x": "center" }, "title": { "size": "large", "font": "quicksand", "case": "lower", "format": "underline", "ending": "fullstop", "spacing": "close", "style": "glowing", "position-x": "center", "position-y": "end" } },
+    { "artist": { "size": "large", "case": "lower", "ending": "", "position-y": "start", "font": "allan", "spacing": "", "style": "deep", "position-x": "start" }, "title": { "size": "large", "case": "lower", "position-y": "end", "font": "open", "format": "strikethrough", "ending": "exclamation", "spacing": "close", "position-x": "start" } },
+    { "artist": { "size": "large", "ending": "", "spacing": "", "font": "arima", "case": "capitalize", "position-x": "end", "position-y": "end" }, "title": { "size": "large", "position-y": "end", "font": "pacifico", "ending": "ellipsis", "spacing": "", "case": "lower", "position-x": "end" } },
+    { "artist": { "size": "large", "spacing": "", "case": "capitalize", "position-y": "end", "font": "megrim", "format": "bold", "style": "hero", "ending": "exclamation", "position-x": "start" }, "title": { "size": "large", "position-y": "end", "spacing": "", "case": "lower", "font": "bungee", "format": "underline", "ending": "exclamation", "position-x": "center" } },
+    { "artist": { "case": "lower", "ending": "fullstop", "font": "bangers", "position-x": "center", "position-y": "center", "size": "large", "spacing": "", "style": "news" }, "title": { "size": "large", "position-y": "end", "position-x": "center", "font": "arima", "case": "camel", "format": "bold", "ending": "question", "spacing": "close" } },
+    { "artist": { "font": "monoton", "format": "overline", "case": "lower", "style": "pop", "position-y": "center", "position-x": "center" }, "title": { "font": "allan", "format": "normal", "case": "lower", "position-y": "center", "position-x": "center", "spacing": "spaced", "size": "large" } },
+    { "artist": { "font": "megrim", "format": "normal", "case": "upper", "position-y": "end", "position-x": "start", "spacing": "spaced" }, "title": { "format": "normal", "case": "capitalize", "position-y": "end", "position-x": "start", "size": "large", "font": "biorhyme" } },
+    { "artist": { "font": "pacifico", "format": "normal", "style": "hero", "position-y": "start", "position-x": "end", "case": "lower" }, "title": { "format": "normal", "case": "lower", "position-y": "start", "position-x": "end", "size": "large", "font": "quicksand" } },
+    { "artist": { "format": "bold", "position-y": "start", "position-x": "end", "size": "small", "font": "arima", "case": "capitalize" }, "title": { "format": "overline", "position-y": "start", "position-x": "end", "case": "upper", "font": "bungee" } },
+    {
+        title: { font: "pacifico", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "start", spacing: "spaced" },
+        artist: { font: "lucky", format: "strikethrough", ending: "question", case: "lower", style: "glowing", "position-y": "start", "position-x": "start" }
+    }, {
+        title: { font: "allan", format: "normal", ending: "question", case: "lower", "position-y": "center", "position-x": "center", spacing: "spaced" },
+        artist: { font: "monoton", format: "overline", ending: "question", case: "lower", style: "pop", "position-y": "center", "position-x": "center" },
+    }, {
+        title: { font: "fruktur", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "end" },
+        artist: { font: "pacifico", format: "normal", ending: "question", case: "lower", style: "hero", "position-y": "start", "position-x": "end" }
+    }, {
+        title: { font: "bangers", format: "normal", ending: "question", case: "capitalize", "position-y": "end", "position-x": "start" },
+        artist: { font: "megrim", format: "normal", ending: "question", case: "upper", "position-y": "end", "position-x": "start", spacing: "spaced" },
+    }, {
+        title: { font: "biorhyme", format: "italic", ending: "question", case: "camel", "position-y": "start", "position-x": "center" },
+        artist: { font: "monoton", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "center", spacing: "spaced" },
+    }
+];
 
 exports.getFullInfo = async(req, res) => {
     await getAllInfo();

@@ -75,6 +75,7 @@ select {
 .actions__wrapper {
     position: absolute;
     right: 0;
+    margin: 10px;
 }
 
 .header__wrapper {
@@ -91,7 +92,6 @@ select {
 .description {
     margin: -8px;
     font-size: 1.2em;
-    text-align: center;
 }
 
 a {
@@ -148,6 +148,7 @@ body.page--dark {
     grid-row: 1;
     grid-column: 1;
     margin: auto;
+    text-align: center;
 }
 
 .page__footer {
@@ -464,21 +465,53 @@ body.page--dark {
         text-shadow: 0 0 10px #FFFFFF;
     }
     &--deep {
-        color: #e0dfdc;
+        color: var(--accent-color);
         letter-spacing: .1em;
         text-shadow: 0 -1px 0 #fff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0, 0, 0, 0.9);
     }
     &--news {
-        color: #333333;
+        color: var(--accent-color3);
         text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0, 0, 0, 0.15);
     }
     &--hero {
         color: #FFFFFF;
-        text-shadow: -5px 5px 0px var(--accent-color2), -10px 10px 0px var(--accent-color2), -15px 15px 0px var(--accent-color2);
+        text-shadow: -5px 5px 0px var(--accent-color3), -10px 10px 0px var(--accent-color3), -15px 15px 0px var(--accent-color3);
     }
-    &--outline {
-        color: #FFFFFF;
-        text-shadow: 2px 2px 0 var(--accent-color2), 2px -2px 0 var(--accent-color2), -2px 2px 0var(--accent-color2), -2px -2px 0 var(--accent-color2), 2px 0px 0 var(--accent-color2), 0px 2px 0 var(--accent-color2), -2px 0px 0 var(--accent-color2), 0px -2px 0 var(--accent-color2);
+    &--pop {
+        letter-spacing: 0.1em;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: 3px;
+        -webkit-text-stroke-color: white;
+        text-shadow: 8px 8px var(--accent-color3), 20px 20px var(--accent-color);
+    }
+    &--emboss {
+        background: linear-gradient(to right, var(--accent-color), var(--accent-color2), var(--accent-color3));
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        &:before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            text-shadow: -0.001em -0.001em 1px rgba(255, 255, 255, .15);
+        }
+        &:after {
+            z-index: -2;
+            text-shadow: 10px 10px 10px rgba(0, 0, 0, .5), 20px 20px 20px rgba(0, 0, 0, .4), 30px 30px 30px rgba(0, 0, 0, .1);
+            mix-blend-mode: multiply;
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+    &--outline-shadow {
+        text-shadow: 6px 6px var(--accent-color3);
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: var(--accent-color);
+        color: transparent;
+        letter-spacing: 6px;
     }
 }
 
