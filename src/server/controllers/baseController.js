@@ -1,22 +1,68 @@
-const axios = require('axios');
+const axios = require("axios");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const ColorThief = require('colorthief');
+const ColorThief = require("colorthief");
 
-const albumStyles = [
-    { "artist": { "font": "fruktur", "style": "hero", "position-x": "start", "position-y": "start" }, "title": { "font": "biorhyme", "case": "lower", "ending": "question", "spacing": "close", "position-x": "end", "position-y": "end" } },
-    { "artist": { "font": "megrim", "spacing": "spaced", "case": "upper", "position-x": "center", "position-y": "center" }, "title": { "case": "lower", "font": "pacifico", "ending": "ellipsis", "spacing": "", "position-y": "center", "position-x": "center" } },
-    { "artist": { "font": "bangers", "spacing": "", "style": "news", "position-y": "end", "position-x": "end", "case": "upper" }, "title": { "font": "biorhyme", "case": "capitalize", "ending": "question", "spacing": "close", "position-x": "end", "position-y": "end", "format": "underline" } },
-    { "artist": { "font": "monoton", "size": "large", "case": "lower", "format": "strikethrough", "ending": "", "position-x": "end", "position-y": "start" }, "title": { "size": "large", "font": "allan", "case": "upper", "format": "bold", "ending": "exclamation", "spacing": "", "position-x": "end", "position-y": "start" } },
-    { "artist": { "size": "large", "case": "lower", "ending": "", "position-y": "start", "font": "bungee", "style": "hero", "spacing": "spaced", "position-x": "center" }, "title": { "size": "large", "font": "quicksand", "case": "lower", "format": "underline", "ending": "fullstop", "spacing": "close", "style": "glowing", "position-x": "center", "position-y": "end" } },
-    { "artist": { "size": "large", "case": "lower", "ending": "", "position-y": "start", "font": "allan", "spacing": "", "style": "deep", "position-x": "start" }, "title": { "size": "large", "case": "lower", "position-y": "end", "font": "open", "format": "strikethrough", "ending": "exclamation", "spacing": "close", "position-x": "start" } },
-    { "artist": { "size": "large", "ending": "", "spacing": "", "font": "arima", "case": "capitalize", "position-x": "end", "position-y": "end" }, "title": { "size": "large", "position-y": "end", "font": "pacifico", "ending": "ellipsis", "spacing": "", "case": "lower", "position-x": "end" } },
-    { "artist": { "size": "large", "spacing": "", "case": "capitalize", "position-y": "end", "font": "megrim", "format": "bold", "style": "hero", "ending": "exclamation", "position-x": "start" }, "title": { "size": "large", "position-y": "end", "spacing": "", "case": "lower", "font": "bungee", "format": "underline", "ending": "exclamation", "position-x": "center" } },
-    { "artist": { "case": "lower", "ending": "fullstop", "font": "bangers", "position-x": "center", "position-y": "center", "size": "large", "spacing": "", "style": "news" }, "title": { "size": "large", "position-y": "end", "position-x": "center", "font": "arima", "case": "camel", "format": "bold", "ending": "question", "spacing": "close" } },
-    { "artist": { "font": "monoton", "format": "overline", "case": "lower", "style": "pop", "position-y": "center", "position-x": "center" }, "title": { "font": "allan", "format": "normal", "case": "lower", "position-y": "center", "position-x": "center", "spacing": "spaced", "size": "large" } },
-    { "artist": { "font": "megrim", "format": "normal", "case": "upper", "position-y": "end", "position-x": "start", "spacing": "spaced" }, "title": { "format": "normal", "case": "capitalize", "position-y": "end", "position-x": "start", "size": "large", "font": "biorhyme" } },
-    { "artist": { "font": "pacifico", "format": "normal", "style": "hero", "position-y": "start", "position-x": "end", "case": "lower" }, "title": { "format": "normal", "case": "lower", "position-y": "start", "position-x": "end", "size": "large", "font": "quicksand" } },
-    { "artist": { "format": "bold", "position-y": "start", "position-x": "end", "size": "small", "font": "arima", "case": "capitalize" }, "title": { "format": "overline", "position-y": "start", "position-x": "end", "case": "upper", "font": "bungee" } },
+// album elements transformers
+const transformers = {
+    title: titleTransformer,
+    artist: artistTransformer,
+    background: coverTransformer
+}
+
+// Album presets
+const albumStyles = [{
+        artist: { font: "fruktur", style: "hero", "position-x": "start", "position-y": "start" },
+        title: { font: "biorhyme", case: "lower", ending: "question", spacing: "close", "position-x": "end", "position-y": "end" }
+    },
+    {
+        artist: { font: "megrim", spacing: "spaced", case: "upper", "position-x": "center", "position-y": "center" },
+        title: { case: "lower", font: "pacifico", ending: "ellipsis", "position-y": "center", "position-x": "center" }
+    },
+    {
+        artist: { font: "bangers", style: "news", "position-y": "end", "position-x": "end", case: "upper" },
+        title: { font: "biorhyme", case: "capitalize", ending: "question", spacing: "close", "position-x": "end", "position-y": "end", format: "underline" }
+    },
+    {
+        artist: { font: "monoton", case: "lower", format: "strikethrough", "position-x": "end", "position-y": "start" },
+        title: { font: "allan", case: "upper", format: "bold", ending: "exclamation", "position-x": "end", "position-y": "start" }
+    },
+    {
+        artist: { case: "lower", "position-y": "start", font: "bungee", style: "hero", spacing: "spaced", "position-x": "center" },
+        title: { font: "quicksand", case: "lower", format: "underline", ending: "fullstop", spacing: "close", style: "glowing", "position-x": "center", "position-y": "end" }
+    },
+    {
+        artist: { case: "lower", "position-y": "start", font: "allan", style: "deep", "position-x": "start" },
+        title: { case: "lower", "position-y": "end", font: "open", format: "strikethrough", ending: "exclamation", spacing: "close", "position-x": "start" }
+    },
+    {
+        artist: { font: "arima", case: "capitalize", "position-x": "end", "position-y": "end" },
+        title: { "position-y": "end", font: "pacifico", ending: "ellipsis", case: "lower", "position-x": "end" }
+    },
+    {
+        artist: { case: "capitalize", "position-y": "end", font: "megrim", format: "bold", style: "hero", ending: "exclamation", "position-x": "start" },
+        title: { "position-y": "end", case: "lower", font: "bungee", format: "underline", ending: "exclamation", "position-x": "center" }
+    },
+    {
+        artist: { case: "lower", ending: "fullstop", font: "bangers", "position-x": "center", "position-y": "center", style: "news" },
+        title: { "position-y": "end", "position-x": "center", font: "arima", case: "camel", format: "bold", ending: "question", spacing: "close" }
+    },
+    {
+        artist: { font: "monoton", format: "overline", case: "lower", style: "pop", "position-y": "center", "position-x": "center" },
+        title: { font: "allan", format: "normal", case: "lower", "position-y": "center", "position-x": "center", spacing: "spaced", }
+    },
+    {
+        artist: { font: "megrim", format: "normal", case: "upper", "position-y": "end", "position-x": "start", spacing: "spaced" },
+        title: { format: "normal", case: "capitalize", "position-y": "end", "position-x": "start", font: "biorhyme" }
+    },
+    {
+        artist: { font: "pacifico", format: "normal", style: "hero", "position-y": "start", "position-x": "end", case: "lower" },
+        title: { format: "normal", case: "lower", "position-y": "start", "position-x": "end", font: "quicksand" }
+    },
+    {
+        artist: { format: "bold", "position-y": "start", "position-x": "end", font: "arima", case: "capitalize" },
+        title: { format: "overline", "position-y": "start", "position-x": "end", case: "upper", font: "bungee" }
+    },
     {
         title: { font: "pacifico", format: "normal", ending: "question", case: "lower", "position-y": "start", "position-x": "start", spacing: "spaced" },
         artist: { font: "lucky", format: "strikethrough", ending: "question", case: "lower", style: "glowing", "position-y": "start", "position-x": "start" }
@@ -37,11 +83,71 @@ const albumStyles = [
 
 exports.getFullInfo = async(req, res) => {
     await getAllInfo();
-
 }
 
-exports.getWikipediaName = async(req, res) => {
-    const response = await axios.get('https://en.wikipedia.org/wiki/Special:Random');
+exports.getAllInfo = async(req, res) => {
+
+    // define promises to fetch all the different album info asynchronously
+    const bandInfo = getWikipediaName()
+        .catch(error => {
+            throw error;
+        });
+    const albumInfo = getWikiquoteTitle()
+        .catch(error => {
+            throw error;
+        });
+    const backgroundInfo = getFlickrPhoto()
+        .catch(error => {
+            throw error;
+        });
+
+    // wait for all AJAX calls to finish
+    const albumRawInfoPromisesResults = await Promise.all([bandInfo, albumInfo, backgroundInfo]);
+    const albumRawInfo = {
+        bandInfo: albumRawInfoPromisesResults[0],
+        albumInfo: albumRawInfoPromisesResults[1],
+        backgroundInfo: albumRawInfoPromisesResults[2]
+    };
+
+    // parse all the color info for the background image asynchronously
+    const palette = getPalette(albumRawInfo.backgroundInfo.photoEndpoint);
+    const majorColor = getMajorColor(albumRawInfo.backgroundInfo.photoEndpoint);
+
+    // wait for the color info processing to finish
+    const colorInfoPromisesResults = await Promise.all([palette, majorColor]);
+    const colorInfo = { palette: colorInfoPromisesResults[0], majorColor: colorInfoPromisesResults[1] };
+
+    const paletteObj = {
+        color1: colorInfo.palette[0].join(","),
+        color2: colorInfo.palette[1].join(","),
+        color3: colorInfo.palette[2].join(",")
+    };
+
+    const transformedAlbumData = applyAlbumStyle({
+        artist: {
+            text: albumRawInfo.bandInfo.chosenArtistName,
+            originUrl: albumRawInfo.bandInfo.originUrl
+        },
+        title: {
+            text: albumRawInfo.albumInfo.selectedQuote,
+            originUrl: albumRawInfo.albumInfo.originUrl
+        },
+        background: {
+            url: albumRawInfo.backgroundInfo.photoEndpoint,
+            originUrl: albumRawInfo.backgroundInfo.originUrl,
+            majorColor: colorInfo.majorColor,
+            palette: paletteObj
+        }
+    });
+
+    // validate if main color of the background is "dar" or "Light"
+    transformedAlbumData.isCoverImageDark = isColorDark(colorInfo.majorColor);
+
+    res.render("index", transformedAlbumData);
+}
+
+async function getWikipediaName(req, res) {
+    const response = await axios.get("https://en.wikipedia.org/wiki/Special:Random");
     console.log(response.request.res.responseUrl);
     const dom = new JSDOM(response.data);
     const chosenArtistName = dom.window.document.querySelector("#firstHeading").textContent
@@ -49,14 +155,14 @@ exports.getWikipediaName = async(req, res) => {
 }
 
 
-exports.getWikiquoteTitle = async(req, res) => {
-    const response = await axios.get('https://en.wikiquote.org/wiki/Special:Random')
+async function getWikiquoteTitle(req, res) {
+    const response = await axios.get("https://en.wikiquote.org/wiki/Special:Random")
 
     console.log(response.request.res.responseUrl);
     const dom = new JSDOM(response.data);
     const eligibleQuotes = [];
 
-    dom.window.document.querySelectorAll('#bodyContent li:not([class]), #bodyContent dd:not([class])').forEach(element => {
+    dom.window.document.querySelectorAll("#bodyContent li:not([class]), #bodyContent dd:not([class])").forEach(element => {
         if (!element.closest(".mw-parser-output") || element.closest("li")) return true;
         element.querySelectorAll("li,dd").forEach(elementToRemove => elementToRemove.remove());
 
@@ -77,8 +183,8 @@ exports.getWikiquoteTitle = async(req, res) => {
 
 }
 
-exports.getFlickrPhoto = async(req, res) => {
-    const response = await axios.get('https://www.flickr.com/explore/interesting/7days/?')
+async function getFlickrPhoto(req, res) {
+    const response = await axios.get("https://www.flickr.com/explore/interesting/7days/?")
 
     console.log(response.request.res.responseUrl);
     const dom = new JSDOM(response.data);
@@ -87,63 +193,6 @@ exports.getFlickrPhoto = async(req, res) => {
     const originUrl = `https://www.flickr.com${photoDom.querySelector("a").getAttribute("href")}`;
 
     return { photoEndpoint, originUrl };
-}
-
-exports.getAllInfo = async(req, res) => {
-
-    const bandInfo = await exports.getWikipediaName()
-        .catch(error => {
-            throw error;
-        });
-    const albumInfo = await exports.getWikiquoteTitle()
-        .catch(error => {
-            throw error;
-        });
-    const backgroundInfo = await exports.getFlickrPhoto()
-        .catch(error => {
-            throw error;
-        });
-
-    const palette = await getPalette(backgroundInfo.photoEndpoint);
-    const majorColor = await getMajorColor(backgroundInfo.photoEndpoint);
-
-    const paletteObj = {
-        color1: palette[0].join(","),
-        color2: palette[1].join(","),
-        color3: palette[2].join(",")
-    }
-    const albumData = applyAlbumStyle({
-        artist: { text: bandInfo.chosenArtistName, originUrl: bandInfo.originUrl },
-        title: { text: albumInfo.selectedQuote, originUrl: albumInfo.originUrl },
-        background: { url: backgroundInfo.photoEndpoint, originUrl: backgroundInfo.originUrl, majorColor, palette: paletteObj, paletteArray: JSON.stringify(palette) }
-    });
-    albumData.isCoverImageDark = isColorDark(majorColor);
-    res.render('index', albumData);
-}
-
-function isColorDark(colorRGBArray) {
-    const averageBrightness = 0.299 * colorRGBArray[0] + 0.587 * colorRGBArray[1] + 0.114 * colorRGBArray[2];
-
-    return averageBrightness < 127;
-}
-/**
- * Returns a random integer between min (inclusive) and max (inclusive).
- * The value is no lower than min (or the next integer greater than min
- * if min isn't an integer) and no greater than max (or the next integer
- * lower than max if max isn't an integer).
- * Using Math.round() will give you a non-uniform distribution!
- */
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-async function getPalette(url) {
-    return ColorThief.getPalette(url, 3)
-}
-async function getMajorColor(url) {
-    return ColorThief.getColor(url)
 }
 
 function titleTransformer(titleData, titleStyle) {
@@ -179,6 +228,7 @@ function artistTransformer(artistData, artistStyle) {
                 artistData.classes.push(`${styleElement}--${artistStyle[styleElement]}`)
         }
     })
+
     if (artistData.text.length < 15) {
         artistData.classes.push("size--large");
     } else if (artistData.text.length > 30) {
@@ -205,21 +255,48 @@ function coverTransformer(coverData, coverStyle) {
     return coverData;
 }
 
-const parsers = {
-    title: titleTransformer,
-    artist: artistTransformer,
-    background: coverTransformer
-}
-
+// fetched the initial data for the album, time to pick a preset and apply transformations
 function applyAlbumStyle(albumData) {
+    console.log(albumData);
+    // Select one randm album preset
     const albumStyleToApply = albumStyles[getRandomInt(0, albumStyles.length - 1)];
+
     Object.keys(albumData).forEach(albumDataElement => {
         const elementData = albumData[albumDataElement];
         const styleData = albumStyleToApply[albumDataElement];
         if (styleData)
-            albumData[albumDataElement] = parsers[albumDataElement](elementData, styleData);
+            albumData[albumDataElement] = transformers[albumDataElement](elementData, styleData);
     });
+
+    // randomize if album requires Parent Supervision
     albumData.parentSupervision = getRandomInt(0, 1) ? true : false;
 
     return albumData;
+}
+
+// Utils functions
+
+function isColorDark(colorRGBArray) {
+    const averageBrightness = 0.299 * colorRGBArray[0] + 0.587 * colorRGBArray[1] + 0.114 * colorRGBArray[2];
+
+    return averageBrightness < 127;
+}
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive).
+ * The value is no lower than min (or the next integer greater than min
+ * if min isn"t an integer) and no greater than max (or the next integer
+ * lower than max if max isn"t an integer).
+ * Using Math.round() will give you a non-uniform distribution!
+ */
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+async function getPalette(url) {
+    return ColorThief.getPalette(url, 3)
+}
+async function getMajorColor(url) {
+    return ColorThief.getColor(url)
 }

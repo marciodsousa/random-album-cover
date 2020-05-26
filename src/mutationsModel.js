@@ -5,7 +5,7 @@ const mutationsModel = {
         format: { multipleAllowed: true, options: ["bold", "underline", "normal", "strikethrough", "italic", "overline"] },
         ending: { multipleAllowed: false, options: ["fullstop", "exclamation", "question", "ellipsis"] },
         spacing: { multipleAllowed: false, options: ["spaced", "close"] },
-        style: { multipleAllowed: true, options: ["glowing", "deep", "hero", "news", "pop", "emboss", "outline-shadow"] },
+        style: { multipleAllowed: true, options: ["glowing", "deep", "hero", "news", "pop", "outline-shadow"] },
         "position-x": { multipleAllowed: false, options: ["start", "center", "end"] },
         "position-y": { multipleAllowed: false, options: ["start", "center", "end"] }
     },

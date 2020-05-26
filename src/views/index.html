@@ -10,10 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Arima+Madurai:wght@300&family=Bangers&family=Open+Sans&family=Roboto&family=Quicksand&family=Fruktur&family=Monoton&family=Allan&family=Megrim&family=Bungee&family=BioRhyme:wght@300&display=swap" rel="stylesheet">
 
     <link href="dist/style.css" rel="stylesheet">
-    <script>
-        const palette = JSON.parse("{{background.paletteArray}}")
-        const majorColor = "{{background.majorColor}}";
-    </script>
     <style>
          :root {
             --accent-color: rgb({{background.palette.color1}});
@@ -71,11 +67,11 @@
                 </main>
                 <div class="cover__overlay"></div>
             </div>
-            <div class="cover__shadows">
+            <div class="cover__shadow__wrapper">
                 <div class="cover__shadow--back"></div>
                 <div class="cover__shadow--close"></div>
             </div>
-            <div class="record-container">
+            <div class="record__wrapper">
                 <div class="record__shadow"></div>
                 <div class="record"></div>
             </div>
