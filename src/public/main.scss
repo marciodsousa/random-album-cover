@@ -14,7 +14,6 @@ body {
 .page {
     &__background {
         position: relative;
-        // z-index: -1;
         margin: auto;
         background-size: cover;
         width: 100%;
@@ -22,7 +21,6 @@ body {
         filter: blur(25px) brightness(0.8);
     }
     &__wrapper {
-        // z-index: 0;
         display: grid;
         margin: auto;
         width: 100%;
@@ -173,7 +171,6 @@ a {
         position: absolute;
         width: $coverDimension;
         height: $coverDimension;
-        // z-index: 2;
     }
     &__background {
         width: $coverDimension;
@@ -194,7 +191,6 @@ a {
             width: $coverDimension;
             left: -3px;
             position: absolute;
-            // z-index: -999999;
             border: 5px solid rgba(0, 0, 0, 0.7);
             border-bottom-width: 0px;
             border-radius: 16px;
@@ -205,7 +201,6 @@ a {
             width: 95%;
             left: -149px;
             position: absolute;
-            // z-index: -999999;
             border: 150px solid rgba(0, 0, 0, 0.3);
             border-bottom-width: 0px;
             border-right-color: transparent;
@@ -222,16 +217,13 @@ a {
         border-radius: 5px;
         width: $coverDimension;
         height: $coverDimension;
-        // z-index: 3;
     }
     &__artist {
         padding: 10px;
-        // z-index: 99;
         font-size: 3em
     }
     &__title {
         padding: 10px;
-        // z-index: 99;
         font-size: 2em;
         align-self: start;
     }
