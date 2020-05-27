@@ -257,7 +257,6 @@ function coverTransformer(coverData, coverStyle) {
 
 // fetched the initial data for the album, time to pick a preset and apply transformations
 function applyAlbumStyle(albumData) {
-    console.log(albumData);
     // Select one randm album preset
     const albumStyleToApply = albumStyles[getRandomInt(0, albumStyles.length - 1)];
 

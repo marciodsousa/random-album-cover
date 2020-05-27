@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <title>Random Album Art Generator | marciodesousa</title>
     <!-- Chrome, Firefox OS and Opera -->
@@ -7,14 +8,30 @@
     <meta name="msapplication-navbutton-color" content=" rgb({{background.majorColor}})">
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content=" rgb({{background.majorColor}})">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Arima+Madurai:wght@300&family=Bangers&family=Open+Sans&family=Roboto&family=Quicksand&family=Fruktur&family=Monoton&family=Allan&family=Megrim&family=Bungee&family=BioRhyme:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Arima+Madurai:wght@300&family=Bangers&family=Open+Sans&family=Roboto&family=Quicksand&family=Fruktur&family=Monoton&family=Allan&family=Megrim&family=Bungee&family=BioRhyme:wght@300&display=swap"
+        rel="stylesheet">
 
     <link href="dist/style.css" rel="stylesheet">
     <style>
          :root {
-            --accent-color: rgb({{background.palette.color1}});
-            --accent-color2: rgb({{background.palette.color2}});
-            --accent-color3: rgb({{background.palette.color3}});
+            --accent-color: rgb( {
+                {
+                    background.palette.color1
+                }
+            }
+            );
+            --accent-color2: rgb( {
+                {
+                    background.palette.color2
+                }
+            }
+            );
+            --accent-color3: rgb( {
+                {
+                    background.palette.color3
+                }
+            }
+            );
         }
     </style>
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
@@ -31,13 +48,13 @@
     <div class="page__background" style="background-image: url({{background.url}});"></div>
     <div class="page__styles">
         <div class="style__category">
-            <h3 class="title">Artist</h3> 
+            <h3 class="title">Artist</h3>
             <div class="artist_variations__wrapper">
             </div>
         </div>
 
         <div class="style__category">
-            <h3 class="title">Title</h3> 
+            <h3 class="title">Title</h3>
             <div class="title_variations__wrapper">
             </div>
         </div>
@@ -45,10 +62,10 @@
     </div>
     <div class="page__wrapper">
         <div class="actions__wrapper">
-                <div class="btn" id="download" title="Download your album art"><span>📥</span></div>
-                <div class="btn" id="refresh" title="Refresh"><span>🔄</span></div>
-                <div class="btn" id="tweak" title="Tweak your album art"><span>☢️</span></div>
-                <div class="btn" id="dump" title="Dump Config"><span>🔄</span></div>
+            <div class="btn" id="download" title="Download your album art"><span>📥</span></div>
+            <div class="btn" id="refresh" title="Refresh"><span>🔄</span></div>
+            <div class="btn" id="tweak" title="Tweak your album art"><span>☢️</span></div>
+            <div class="btn" id="dump" title="Dump Config"><span>🔄</span></div>
         </div>
         <div class="page__header">
             <div class="header__wrapper">
@@ -77,13 +94,25 @@
             </div>
         </div>
         <div class="page__footer info-text">
-            <span>made with ♥️ by <a href="http://marciodesousa.xyz" target="_blank">Márcio de Sousa</a>, 2020</span>
-            {{!-- <span>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></span> --}}
+            <span>made with ♥️ by <a href="http://marciodesousa.xyz" target="_blank">Márcio de Sousa</a>, 2020</span> {{!-- <span>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></span>            --}}
         </div>
     </div>
     <script>
     </script>
 </body>
 <script src="dist/App.bundle.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167872183-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-167872183-1');
+</script>
+
 
 </html>
