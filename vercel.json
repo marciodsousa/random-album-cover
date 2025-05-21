@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/start.js",
+      "use": "@vercel/node",
+      "config": {
+        "buildCommand": "yarn install && webpack"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/start.js"
+    }
+  ]
+}
